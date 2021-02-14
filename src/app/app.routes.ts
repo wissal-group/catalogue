@@ -19,15 +19,15 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: '',
         loadChildren: '~modules/dashboard/dashboard.module#DashboardModule',
       },
       {
-        path: 'clients',
-        loadChildren: '~modules/client/client.module#ClientModule',
+        path: 'products',
+        loadChildren: '~modules/product/product.module#ProductModule',
       },
       {
         path: 'users',

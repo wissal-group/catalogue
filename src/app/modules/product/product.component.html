@@ -1,0 +1,107 @@
+<div class="animated fadeIn table-container mat-elevation-z20">
+  <mat-card>
+    <mat-card-header>
+      <i class="material-icons">supervised_user_circle</i>
+      <mat-card-title>Products</mat-card-title>
+      <mat-card-subtitle>Add, update or delete products</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Table loading spinner -->
+      <div class="table-loading-shade" *ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </div>
+
+      <div class="row col-12">
+
+
+        <div class="col-4 ">
+          <!-- Add button -->
+          <button mat-raised-button (click)="save()"  color="primary">
+            <mat-icon>add</mat-icon>
+            Add new
+          </button>
+          <button mat-stroked-button (click)="save()" color="secondary">
+            <mat-icon>add</mat-icon>
+            refresh
+          </button>
+        </div>
+
+      </div>
+
+      <mat-table #table [dataSource]="dataSource" class="person-table" matSort matSortActive="id" matSortDisableClear
+                 matSortDirection="desc">
+        <!-- Table content -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index;"> {{ i + 1 }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ProductRef</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.productId}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="categoryId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+          <mat-cell *matCellDef="let row" [matTooltip]="row.categoryId" [matTooltipClass]="'large'">{{ row.categoryId  | slice:0:20}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="vendorCode">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Vendor Code</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.VendorCode }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="descriptionDetails">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Description Details</mat-header-cell>
+          <mat-cell  *matCellDef="let row">{{ row.descriptionDetails | slice:0:100  }}...</mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="createDate">
+          <mat-header-cell *matHeaderCellDef>Created at</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.createDate | date:'dd/MM/yyyy' }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+          <mat-header-cell *matHeaderCellDef>Created at</mat-header-cell>
+          <mat-cell *matCellDef="let row"> <img style="width:80px" [src]="row?.thumbURL[0]" /></mat-cell>
+        </ng-container>
+
+
+        <!-- Table actions -->
+        <ng-container matColumnDef="personid">
+          <mat-header-cell *matHeaderCellDef>
+            Actions
+          </mat-header-cell>
+
+
+          <mat-cell *matCellDef="let row">
+
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Click to see more actions">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="open()">
+                <mat-icon aria-label="Edit">create</mat-icon>
+                Edit
+              </button>
+              <button mat-menu-item (click)="delete(row)">
+                <mat-icon aria-label="Delete">clear</mat-icon>
+                Delete
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <!-- Table pagination -->
+      <mat-paginator [pageSizeOptions]="pageSizeOptions" [length]="totalItems" [pageSize]="pageSize"
+                     (page)="onPaginateChange($event)">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

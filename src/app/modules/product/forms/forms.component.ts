@@ -3,9 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { ClientService } from '~services/client.service';
+import { ProductService } from '~services/product.service';
 import { SnackbarComponent } from '~components/snackbar/snackbar.component';
-import { Client } from '~app/models/client';
+import { Product } from '~app/models/product';
 
 @Component({
   selector: 'app-forms',
@@ -21,7 +21,7 @@ export class FormsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: any,
     private fb: FormBuilder,
-    private clientService: ClientService,
+    private productService: ProductService,
     public snack: MatSnackBar
   ) { }
 
@@ -54,7 +54,7 @@ export class FormsComponent implements OnInit {
   }
 
   public save(form: FormGroup) {
-    this.clientService.save(form.value).subscribe((data: any) => {
+    this.productService.save(form.value).subscribe((data: any) => {
       this.openSnack(data);
 
       if (data.success) {

@@ -25,7 +25,7 @@ import { SnackbarComponent } from '~components/snackbar/snackbar.component';
 // IMPORTACIÓN DE LOS SERVICES
 import { AuthService } from '~services/auth.service';
 import { UserService } from '~services/user.service';
-import { ClientService } from '~app/services/client.service';
+import { ProductService } from '~app/services/product.service';
 
 /*IMPORTACION DE LOS MODULES QUE A SU VEZ ELLOS IMPORTAN SUS PROPIOS COMPONENTES
 ASI SE EVITA SATURAR ESTE ARCHIVO DE IMPORTACIONES Y SE MODULARIZA EL PROYECTO.*/
@@ -56,7 +56,7 @@ import { LoginLayoutModule } from '~modules/login-layout/login-layout.module';
     AuthGuard,
     AuthService,
     UserService,
-    ClientService
+    ProductService
   ],
   entryComponents: [ /*AQUI SE AGREGAN LOS MAT-CONFIRM Y LOS MAT-SNACKBAR DE ANGULAR MATERIAL*/
     ConfirmComponent,

@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '~utils/shared.module';
 
-import { ClientComponent } from './client.component';
+import { ProductComponent } from './product.component';
 import { FormsComponent } from './forms/forms.component';
 
 @NgModule({
   imports: [
-    RouterModule.forChild([{path: '', component: ClientComponent}]),
+    RouterModule.forChild([{path: '', component: ProductComponent}]),
     SharedModule
   ],
   declarations: [
-    ClientComponent,
+    ProductComponent,
     FormsComponent
   ],
   providers: [],
@@ -22,5 +22,5 @@ import { FormsComponent } from './forms/forms.component';
     RouterModule,
   ]
 })
-export class ClientModule { }
+export class ProductModule { }
 

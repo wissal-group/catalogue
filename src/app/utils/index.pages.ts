@@ -8,5 +8,5 @@ export { LoginComponent } from '~modules/login-layout/login/login.component';
 export { DashboardComponent } from '~modules/dashboard/dashboard.component';
 
 // CRUD
-export { ClientComponent } from '~modules/client/client.component';
+export { ProductComponent } from '~modules/product/product.component';
 export { UserComponent } from '~modules/user/user.component';

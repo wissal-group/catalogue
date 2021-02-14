@@ -1,35 +1,35 @@
-<mat-toolbar class="toolbar" color="accent">
-  <h1 class="menu" routerLink="/" style="cursor: pointer;">Angular-CRUD</h1>
-  <span class="spacer"></span>
+<!--<mat-toolbar class="toolbar" color="accent">-->
+<!--  <h1 class="menu" routerLink="/" style="cursor: pointer;">Angular-CRUD</h1>-->
+<!--  <span class="spacer"></span>-->
 
-  <!-- <button mat-icon-button [matMenuTriggerFor]="menu" mdTooltip="Change theme">
-    <mat-icon>format_color_fill</mat-icon>
-  </button> -->
+<!--  &lt;!&ndash; <button mat-icon-button [matMenuTriggerFor]="menu" mdTooltip="Change theme">-->
+<!--    <mat-icon>format_color_fill</mat-icon>-->
+<!--  </button> &ndash;&gt;-->
 
-  <!-- <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="null">Light</button> -->
-    <!-- <button mat-menu-item (click)="changeTheme('light-theme')">Light</button> -->
-    <!-- <button mat-menu-item (click)="null">Dark</button> -->
-    <!-- <button mat-menu-item (click)="changeTheme('dark-theme')">Dark</button> -->
-  <!-- </mat-menu> -->
+<!--  &lt;!&ndash; <mat-menu #menu="matMenu">-->
+<!--    <button mat-menu-item (click)="null">Light</button> &ndash;&gt;-->
+<!--    &lt;!&ndash; <button mat-menu-item (click)="changeTheme('light-theme')">Light</button> &ndash;&gt;-->
+<!--    &lt;!&ndash; <button mat-menu-item (click)="null">Dark</button> &ndash;&gt;-->
+<!--    &lt;!&ndash; <button mat-menu-item (click)="changeTheme('dark-theme')">Dark</button> &ndash;&gt;-->
+<!--  &lt;!&ndash; </mat-menu> &ndash;&gt;-->
 
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
-    <mat-icon>person_pin</mat-icon>
-  </button>
+<!--  <button mat-icon-button [matMenuTriggerFor]="profileMenu">-->
+<!--    <mat-icon>person_pin</mat-icon>-->
+<!--  </button>-->
 
-  <!--USER PROFILE MENU-->
-  <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item disabled>
-      <mat-icon>supervisor_account</mat-icon>
-      <span>Modify account</span>
-    </button>
+<!--  &lt;!&ndash;USER PROFILE MENU&ndash;&gt;-->
+<!--  <mat-menu #profileMenu="matMenu">-->
+<!--    <button mat-menu-item disabled>-->
+<!--      <mat-icon>supervisor_account</mat-icon>-->
+<!--      <span>Modify account</span>-->
+<!--    </button>-->
 
-    <button mat-menu-item (click)="openDialog()">
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
-</mat-toolbar>
+<!--    <button mat-menu-item (click)="openDialog()">-->
+<!--      <mat-icon>exit_to_app</mat-icon>-->
+<!--      <span>Logout</span>-->
+<!--    </button>-->
+<!--  </mat-menu>-->
+<!--</mat-toolbar>-->
 
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
@@ -39,9 +39,9 @@
         &nbsp;Dashboard
       </a>
 
-      <a mat-list-item routerLink="/clients">
+      <a mat-list-item routerLink="/products">
         <i class="material-icons">web</i>
-        &nbsp;Clients
+        &nbsp;Prodcuts
       </a>
 
       <a mat-list-item routerLink="/users">

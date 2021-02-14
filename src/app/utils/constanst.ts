@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:3000';
+const HOST = 'https://bbusyzb87h.execute-api.eu-west-3.amazonaws.com/prod';
 
 export const CONSTANST = {
     permissions: {},
@@ -7,11 +7,11 @@ export const CONSTANST = {
             login: HOST + '/api/auth/login',
             logout: HOST + '/api/auth/logout'
         },
-        client: {
-            list: HOST + '/api/client',
-            delete: HOST + '/api/client/delete/:id',
-            save: HOST + '/api/client/save',
-            get: HOST + '/api/client/:id'
+        product: {
+            list: HOST + '/products/size',
+            delete: HOST + '/products/:id',
+            save: HOST + '/products',
+            get: HOST + '/products/:id'
         },
         user: {}
     },
