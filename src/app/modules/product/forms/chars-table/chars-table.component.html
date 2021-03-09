@@ -1,0 +1,20 @@
+<div fxLayout="column">
+  <h1 mat-dialog-title>Characteristics </h1>
+
+  <table role="list">
+
+    <ng-container *ngFor="let charType of characteristics[0] | keyvalue">
+      <tr>
+        <td class="no-border"><b>{{charType.key}} :</b></td>
+      </tr>
+      <ng-container *ngFor="let characteristic of charType.value | keyvalue">
+        <tr>
+          <td>{{characteristic.key}}</td>
+          <td> {{characteristic.value}} </td>
+        </tr>
+      </ng-container>
+      <br><br><br>
+    </ng-container>
+
+  </table>
+</div>

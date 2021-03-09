@@ -1,4 +1,14 @@
 <div fxLayout="column">
+
+  <div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]>Cancel</button>
+    <button mat-raised-button color="primary" (click)='save(frm)' class="btnSave" [disabled]="!frm.valid">
+      <mat-icon aria-label="icon-button">save</mat-icon>
+      <span>Save</span>
+    </button>
+  </div>
+
+
   <h1 mat-dialog-title> {{data.data.title}}</h1>
   <div fxLayout="row" >
 
@@ -44,7 +54,7 @@
 
         <mat-form-field>
           <textarea matInput placeholder="description " formControlName="descriptionDetails" class="person-input"
-                    rows="7"></textarea>
+                    rows="10"></textarea>
           <mat-hint align="end">{{frm.controls.descriptionDetails.value?.length || 0}}/10</mat-hint>
           <mat-error *ngIf="frm.controls.descriptionDetails.invalid">{{getLastNameErrorMessage()}}</mat-error>
         </mat-form-field>
@@ -73,12 +83,10 @@
   </div>
   </div>
 
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <app-chars-table [characteristics]="data.data.characteristics"></app-chars-table>
 
-  <div mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]>Cancel</button>
-    <button mat-raised-button color="primary" (click)='save(frm)' class="btnSave" [disabled]="!frm.valid">
-      <mat-icon aria-label="icon-button">save</mat-icon>
-      <span>Save</span>
-    </button>
-  </div>
+
 </div>

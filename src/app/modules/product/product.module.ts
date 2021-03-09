@@ -4,6 +4,7 @@ import { SharedModule } from '~utils/shared.module';
 
 import { ProductComponent } from './product.component';
 import { FormsComponent } from './forms/forms.component';
+import { CharsTableComponent } from './forms/chars-table/chars-table.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { FormsComponent } from './forms/forms.component';
   ],
   declarations: [
     ProductComponent,
-    FormsComponent
+    FormsComponent,
+    CharsTableComponent
   ],
   providers: [],
   entryComponents: [

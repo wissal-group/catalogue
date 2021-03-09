@@ -12,6 +12,7 @@ import {AuthService} from '~services/auth.service';
 import {ConfirmComponent} from '~components/confirm/confirm.component';
 import {FormsComponent} from '~modules/product/forms/forms.component';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
+import {ScrollStrategyOptions} from '@angular/cdk/overlay';
 
 
 @Component({
@@ -122,6 +123,8 @@ export class ProductComponent implements AfterViewInit, OnInit {
     //   if (data.success) {
         const dialogRef = this.dialog.open(FormsComponent, {
           width: '1800px',
+          height: '100%',
+          // scrollStrategy:,
           data: {title: 'Update person', action: 'edit', data: product}
         });
 
