@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { ProductService } from '~services/product.service';
-import { SnackbarComponent } from '~components/snackbar/snackbar.component';
-import { Product } from '~app/models/product';
+import {ProductService} from '~services/product.service';
+import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-forms',
@@ -15,6 +14,9 @@ import { Product } from '~app/models/product';
 
 export class FormsComponent implements OnInit {
   public frm: FormGroup;
+  public mode: string;
+
+  public displayedImage: string;
 
   constructor(
     public dialogRef: MatDialogRef<FormsComponent>,
@@ -23,7 +25,8 @@ export class FormsComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     public snack: MatSnackBar
-  ) { }
+  ) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -31,25 +34,31 @@ export class FormsComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.displayedImage = this.data.data.imgURL[0];
+  }
+
+  changeImage(url: string) {
+    this.displayedImage = url;
   }
 
   openSnack(data: any) {
     this.snack.openFromComponent(SnackbarComponent, {
-      data: { data: data },
+      data: {data: data},
       duration: 3000
     });
   }
 
   private initializeForm() {
-    const IS_EDITING = this.data.action === 'edit';
+    this.mode = this.data.action;
     const data = this.data.data;
 
     this.frm = this.fb.group({
-      first_name: new FormControl(IS_EDITING ? data.first_name : null, [Validators.required, Validators.minLength(3)]),
-      last_name: new FormControl(IS_EDITING ? data.last_name : null, [Validators.required, Validators.minLength(3)]),
-      age: new FormControl(IS_EDITING ? data.age : null, [Validators.required, Validators.minLength(1)]),
-      gender: new FormControl(IS_EDITING ? data.gender : null, [Validators.required]),
-      id: new FormControl(IS_EDITING ? data.id : null)
+      title: new FormControl(data.title),
+      categoryId: new FormControl(data.categoryId, [Validators.required, Validators.minLength(3)]),
+      productId: new FormControl(data.productId, [Validators.required, Validators.minLength(3)]),
+      descriptionDetails: new FormControl(data.descriptionDetails, [Validators.required]),
+      vendorCode: new FormControl(data.VendorCode),
+
     });
   }
 
@@ -65,17 +74,17 @@ export class FormsComponent implements OnInit {
 
   public getNameErrorMessage() {
     return this.frm.controls.first_name.hasError('required') ? 'First name is required' :
-      this.frm.controls.name.hasError('minlength') ? 'Al menos 2 caracteres' : '';
+      this.frm.controls.name.hasError('minlength') ? 'min length is 2' : '';
   }
 
   public getLastNameErrorMessage() {
     return this.frm.controls.last_name.hasError('required') ? 'Last name is required' :
-      this.frm.controls.name.hasError('minlength') ? 'Al menos 2 caracteres' : '';
+      this.frm.controls.name.hasError('minlength') ? 'min length is 2' : '';
   }
 
   public getAgeErrorMessage() {
     return this.frm.controls.age.hasError('required') ? 'Age is required' :
-      this.frm.controls.age.hasError('minlength') ? 'Al menos un numero debe ser ingresado' : '';
+      this.frm.controls.age.hasError('minlength') ? 'Min lenght is 2' : '';
   }
 
   public getGenderErrorMessage() {

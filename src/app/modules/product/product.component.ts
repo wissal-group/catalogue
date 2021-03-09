@@ -13,7 +13,6 @@ import {ConfirmComponent} from '~components/confirm/confirm.component';
 import {FormsComponent} from '~modules/product/forms/forms.component';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 
-import {Controller} from '~base/controller';
 
 @Component({
   selector: 'app-product',
@@ -58,8 +57,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    // ANTES QUE LA VISTA CARGUE INICIA LA CARGA DE DATOS EN EL GRID
-    this.getData(500, 'undefined');
+    this.getData(10, 'undefined');
   }
 
   ngAfterViewChecked() {
@@ -118,19 +116,21 @@ export class ProductComponent implements AfterViewInit, OnInit {
   // }
 
   edit(product: Product): void {
+    console.log('product' + JSON.stringify(product));
+
     // this.productService.getOne(product.productId).subscribe((data: any) => {
     //   if (data.success) {
-    //     const dialogRef = this.dialog.open(FormsComponent, {
-    //       width: '400px',
-    //       data: {title: 'Update person', action: 'edit', data: data.data}
-    //     });
-    //
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       if (result) {
-    //         this.paginator._changePageSize(this.paginator.pageSize);
-    //       }
-    //     });
-    //   }
+        const dialogRef = this.dialog.open(FormsComponent, {
+          width: '1800px',
+          data: {title: 'Update person', action: 'edit', data: product}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.paginator._changePageSize(this.paginator.pageSize);
+          }
+        });
+      // }
     // });
   }
 

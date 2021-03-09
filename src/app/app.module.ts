@@ -1,40 +1,33 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 
-/*ESTE ARCHIVO CONTIENE IMPORTACIONES QUE ESTAN EN TODOS LOS MODULOS
-PARA AHORRARSE LINEAS SE IMPORTAN EN EL Y LUEGO EL ARCHIVO SE IMPORTA
-EN TODOS LOS MODULOS*/
-import { SharedModule } from '~utils/shared.module';
 
-// IMPORTACION DEL MODULO DE RUTAS
-import { AppRoutingModule } from '~app/app.routes';
+import {SharedModule} from '~utils/shared.module';
 
-// IMPORTACION DE LOS GUARDS
-import { AuthGuard } from '~guards/auth.guard';
+import {AppRoutingModule} from '~app/app.routes';
 
-// COMPONENTS
-import { AppComponent } from '~components/app/app.component';
-import { TablesComponent } from '~components/tables/tables.component';
-import { ContactUsComponent } from '~components/contact-us/contact-us.component';
-import { NotFoundComponent } from '~components/not-found/not-found.component';
-import { ConfirmComponent } from '~components/confirm/confirm.component';
-import { SnackbarComponent } from '~components/snackbar/snackbar.component';
+import {AuthGuard} from '~guards/auth.guard';
 
-// IMPORTACIÓN DE LOS SERVICES
-import { AuthService } from '~services/auth.service';
-import { UserService } from '~services/user.service';
-import { ProductService } from '~app/services/product.service';
+import {AppComponent} from '~components/app/app.component';
+import {TablesComponent} from '~components/tables/tables.component';
+import {ContactUsComponent} from '~components/contact-us/contact-us.component';
+import {NotFoundComponent} from '~components/not-found/not-found.component';
+import {ConfirmComponent} from '~components/confirm/confirm.component';
+import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 
-/*IMPORTACION DE LOS MODULES QUE A SU VEZ ELLOS IMPORTAN SUS PROPIOS COMPONENTES
-ASI SE EVITA SATURAR ESTE ARCHIVO DE IMPORTACIONES Y SE MODULARIZA EL PROYECTO.*/
-import { UserModule } from '~modules/user/user.module';
-import { AdminLayoutModule } from '~modules/admin-layout/admin-layout.module';
-import { LoginLayoutModule } from '~modules/login-layout/login-layout.module';
+import {AuthService} from '~services/auth.service';
+import {UserService} from '~services/user.service';
+import {ProductService} from '~app/services/product.service';
+
+
+import {UserModule} from '~modules/user/user.module';
+import {AdminLayoutModule} from '~modules/admin-layout/admin-layout.module';
+import {LoginLayoutModule} from '~modules/login-layout/login-layout.module';
 
 @NgModule({
-  declarations: [ /*DECLARACIÓN DE COMPONENTES*/
+  declarations: [
     AppComponent,
     TablesComponent,
     ContactUsComponent,
@@ -42,7 +35,7 @@ import { LoginLayoutModule } from '~modules/login-layout/login-layout.module';
     ConfirmComponent,
     SnackbarComponent,
   ],
-  imports: [ /*DECLARACIÓN DE MODULOS*/
+  imports: [
     SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -52,17 +45,18 @@ import { LoginLayoutModule } from '~modules/login-layout/login-layout.module';
     LoginLayoutModule,
     UserModule,
   ],
-  providers: [ /*DECLARACIÓN DE SERVICIOS*/
+  providers: [
     AuthGuard,
     AuthService,
     UserService,
     ProductService
   ],
-  entryComponents: [ /*AQUI SE AGREGAN LOS MAT-CONFIRM Y LOS MAT-SNACKBAR DE ANGULAR MATERIAL*/
+  entryComponents: [
     ConfirmComponent,
     SnackbarComponent
   ],
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+}
