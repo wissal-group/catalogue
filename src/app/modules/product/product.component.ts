@@ -55,7 +55,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.getData(10, 'undefined');
+    this.getData(this.pageSize, 'undefined');
     this.previousElements[0] = 'undefined';
   }
 

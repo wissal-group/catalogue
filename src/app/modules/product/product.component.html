@@ -111,18 +111,18 @@
         </div>
 
         <div class="go-to-page">
-          <ng-template #prevBtn>
+          <div *ngIf="page > 1">
             <button mat-icon-button class="prev-arrow-btn" (click)="decrementPageIndex()">
               <span class="material-icons">navigate_before</span>
             </button>
-          </ng-template>
+          </div>
           <mat-form-field appearance="outline" style="width: 100%!important; align-content: center">
             <input disabled style="align-content: center" matInput type="number" placeholder="" [(ngModel)]="page"
                    min="1"
                    (ngModelChange)="verifyInputPageIndex()">
             <span matSuffix></span>
           </mat-form-field>
-          <button mat-icon-button *ngIf="page<nbPages" class="next-arrow-btn" (click)="incrementPageIndex()">
+          <button mat-icon-button class="next-arrow-btn" (click)="incrementPageIndex()">
             <span class="material-icons">navigate_next</span>
           </button>
         </div>
