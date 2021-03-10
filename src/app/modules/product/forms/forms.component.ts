@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -15,6 +15,8 @@ import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 export class FormsComponent implements OnInit {
   public frm: FormGroup;
   public mode: string;
+
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   public displayedImage: string;
 
@@ -70,6 +72,11 @@ export class FormsComponent implements OnInit {
         this.dialogRef.close(true);
       }
     });
+  }
+
+
+  chooseImage() {
+    this.fileInput.nativeElement.click();
   }
 
   public getNameErrorMessage() {

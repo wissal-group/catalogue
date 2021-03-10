@@ -63,18 +63,24 @@
     </div>
 
   </div>
+<!--    images component-->
   <div fxFlexOffset="5" fxLayout="column" fxFlex="45" fxLayoutAlign="center top">
     <div class="main-image" fxLayoutAlign="center top">
       <ng-container *ngIf="displayedImage; else noImage ">
         <img [src]="displayedImage">
       </ng-container>
       <ng-template #noImage>
-        <img width="500" src="assets/img/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg">
+        <img width="500" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png">
 
       </ng-template>
     </div>
     <div  fxLayoutAlign="left top" fxFlex="100" style="width: 100% ;  overflow-x: scroll" >
-
+      <div style="height:0px;overflow:hidden">
+        <input type="file" #fileInput/>
+      </div>
+      <button (click)="chooseImage()" style=" margin: 13px; min-width: 100px; border-radius: 14px;" fxLayoutAlign="center center">
+        <mat-icon style="" aria-hidden="false" aria-label="Add ">upload</mat-icon>
+      </button>
       <ng-container *ngFor=" let img of data.data.imgURL; let i = index" >
         <img  [class]=" displayedImage == data.data.imgURL[i]? 'selected':'thumb'" [src]="data.data?.thumbURL[i]" (click)="changeImage(data.data?.imgURL[i])">
       </ng-container>
@@ -86,6 +92,7 @@
   <br>
   <mat-divider></mat-divider>
   <br>
+<!--  characteristics table-->
   <app-chars-table [characteristics]="data.data.characteristics"></app-chars-table>
 
 
