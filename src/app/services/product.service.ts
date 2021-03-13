@@ -47,8 +47,8 @@ export class ProductService {
     );
   }
 
-  getOne(id: number): Observable<Response> {
-    return this.http.get<Response>(
+  getOne(id: number): Observable<Product> {
+    return this.http.get<Product>(
       CONSTANST.routes.product.get.replace(':id', String(id)),
     );
   }

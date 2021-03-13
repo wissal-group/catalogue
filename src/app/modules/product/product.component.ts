@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -59,27 +58,27 @@ export class ProductComponent implements AfterViewInit, OnInit {
       {
         name: 'Printers',
         categories: [
-            {viewValue: 'laser Printers', value: 'Hardware>Printers_en_scanners>Printers>Laser_printers'},
-            {viewValue: 'Label Printers', value: 'Hardware>Printers_en_scanners>Printers>Labelprinters'},
+          {viewValue: 'laser Printers', value: 'Hardware>Printers_en_scanners>Printers>Laser_printers'},
+          {viewValue: 'Label Printers', value: 'Hardware>Printers_en_scanners>Printers>Labelprinters'},
         ]
       },
       {
         name: 'Monitors',
         categories: [
-            {viewValue: 'Monitor', value: 'Hardware>Beeld_en_geluid>Monitoren>Televisies'},
-            {viewValue: 'Desktop Monitors', value: 'Hardware>Beeld_en_geluid>Monitoren>Desktop_monitoren'},
-            {viewValue: 'Video Splitters', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Video_splitters'},
-            {viewValue: 'Monitors accessories', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Beeld_accessoires'},
-            {viewValue: 'Cables adapters', value: 'Hardware>Beeld_en_geluid>Kabels>Adapters'},
-            {viewValue: 'Wall brackets', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Muursteunen'},
+          {viewValue: 'Monitor', value: 'Hardware>Beeld_en_geluid>Monitoren>Televisies'},
+          {viewValue: 'Desktop Monitors', value: 'Hardware>Beeld_en_geluid>Monitoren>Desktop_monitoren'},
+          {viewValue: 'Video Splitters', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Video_splitters'},
+          {viewValue: 'Monitors accessories', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Beeld_accessoires'},
+          {viewValue: 'Cables adapters', value: 'Hardware>Beeld_en_geluid>Kabels>Adapters'},
+          {viewValue: 'Wall brackets', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Muursteunen'},
         ]
       },
       {
         name: 'Servers and Storage',
         categories: [
-            {viewValue: 'Backup and storage ', value: 'Hardware>Servers_en_storage>Backup_en_storage>UPS'},
-            {viewValue: 'Montage kits ', value: 'Hardware>Servers_en_storage>Accessoires>Montagekits'},
-            {viewValue: 'Servers batteries', value: 'Hardware>Servers_en_storage>Server_en_back-up_onderdelen>Accu\'s_en_batterijen'},
+          {viewValue: 'Backup and storage ', value: 'Hardware>Servers_en_storage>Backup_en_storage>UPS'},
+          {viewValue: 'Montage kits ', value: 'Hardware>Servers_en_storage>Accessoires>Montagekits'},
+          {viewValue: 'Servers batteries', value: 'Hardware>Servers_en_storage>Server_en_back-up_onderdelen>Accu\'s_en_batterijen'},
         ]
       },
     ];
@@ -132,6 +131,18 @@ export class ProductComponent implements AfterViewInit, OnInit {
     });
   }
 
+  getProduct(id: string) {
+    this.isLoading = true;
+    this.productService.getOne(Number(id)).subscribe(res => {
+        this.isLoading = false;
+        this.edit(res);
+      },
+      error => {
+        this.openSnack({ message: 'Product not found ! '});
+        this.isLoading = false;
+      });
+  }
+
   getByCategory(category: string) {
     if (category === undefined) {
       this.getData(this.pageSize, 'undefined');
@@ -181,7 +192,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
   }

@@ -19,11 +19,11 @@
           <!--  Get by EAN CODE        -->
           <mat-form-field class="example-form-field">
             <mat-label>Enter EAN Code</mat-label>
-            <input type="number" matInput type="text" [(ngModel)]="searchByEANCODE">
+            <input type="number" matInput type="text" [(ngModel)]="searchByEANCODE" #eancode>
             <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="Clear" (click)="searchByEANCODE=''">
               <mat-icon>close</mat-icon>
             </button>
-            <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="done">
+            <button mat-button *ngIf="searchByEANCODE" (click)="getProduct(eancode.value)" matSuffix mat-icon-button aria-label="done">
               <mat-icon>done</mat-icon>
             </button>
           </mat-form-field>
