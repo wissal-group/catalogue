@@ -18,11 +18,21 @@
 //    z-index: 2;
 //}
 
+mat-form-field{
+  margin: 10px;
+}
+
+.center{
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+}
+
 .table-loading-shade {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
-  bottom: 56px;
+  //bottom: 56px;
   right: 0;
   background: rgba(0, 0, 0, 0.01);
   z-index: 1;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {CONSTANST} from '~utils/constanst';
 import {Product} from '~app/models/product';
 import {Response} from '~app/models/response';
@@ -17,20 +17,26 @@ export class ProductService {
 
   headers = {
     // 'Authorization': 'JWT ' + localStorage.getItem('token')
-    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE'
-
+    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
+    'Access-Control-Allow-Origin': '*'
   };
 
 
 
-  getList(
-    // sortActive: string, order: string,
-    pageSize: number, lastElement: string
-    // , search: string
-  ): Observable<Product[]> {
+  getList(pageSize: number, lastElement: string): Observable<Product[]> {
     const res = this.http.get<Product[]>(
       CONSTANST.routes.product.list + '/' + pageSize + '/' + lastElement,
       // {headers: this.headers, params: params}
+    );
+    return res;
+  }
+
+
+  getByCategory(category: string): Observable<Product[]> {
+    const params = new HttpParams().set('categoryId', category);
+    const res = this.http.get<Product[]>(
+      CONSTANST.routes.product.category,
+      {  params: params}
     );
     return res;
   }

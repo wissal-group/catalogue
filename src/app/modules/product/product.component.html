@@ -8,25 +8,47 @@
 
     <mat-card-content>
       <!-- Table loading spinner -->
-      <div class="table-loading-shade" *ngIf="isLoading">
-        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <div class="center" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
       </div>
 
-      <div class="row col-12">
+<!--      Options DIV-->
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!--  Options Menu      -->
+        <div>
+          <!--  Get by EAN CODE        -->
+          <mat-form-field class="example-form-field">
+            <mat-label>Enter EAN Code</mat-label>
+            <input type="number" matInput type="text" [(ngModel)]="searchByEANCODE">
+            <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="Clear" (click)="searchByEANCODE=''">
+              <mat-icon>close</mat-icon>
+            </button>
+            <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="done">
+              <mat-icon>done</mat-icon>
+            </button>
+          </mat-form-field>
+          <!--  SELECT CATEGORY        -->
 
+          <mat-form-field>
+            <mat-label>Select a category</mat-label>
+            <mat-select #select (valueChange)="getByCategory(select.value)">
+              <mat-option>ALL</mat-option>
 
-        <div class="col-4 ">
+              <mat-optgroup *ngFor="let group of categories" [label]="group.name" >
+                <mat-option *ngFor="let category of group.categories" [value]="category.value">
+                  {{category.viewValue}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
           <!-- Add button -->
           <button mat-raised-button (click)="save()" color="primary">
             <mat-icon>add</mat-icon>
             Add new
           </button>
-          <button mat-stroked-button (click)="save()" color="secondary">
-            <mat-icon>refresh</mat-icon>
-            refresh
-          </button>
         </div>
-
       </div>
 
       <mat-table #table [dataSource]="dataSource" class="person-table" matSort matSortActive="id" matSortDisableClear
@@ -65,7 +87,7 @@
         </ng-container>
 
         <ng-container matColumnDef="image">
-          <mat-header-cell *matHeaderCellDef>Created at</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
           <mat-cell *matCellDef="let row"><img style="width:80px" [src]="row?.thumbURL[0]"/></mat-cell>
         </ng-container>
 
@@ -100,7 +122,7 @@
       </mat-table>
 
 
-      <div class="cmd-paginator">
+      <div *ngIf="paginationActivated" class="cmd-paginator">
         <div class="element-per-page">
           <div>previous items : {{page * pageSize}}</div>
           <mat-form-field appearance="outline">

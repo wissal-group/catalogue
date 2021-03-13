@@ -25,24 +25,71 @@ export class ProductComponent implements AfterViewInit, OnInit {
   public pageSize = 50;
   public dataSource = new MatTableDataSource<any>();
   public page = 1;
-  public isLoading = false;
+  public isLoading: boolean;
   public isTotalReached = false;
   public totalItems = 99999;
   public search = '';
 
-  public nbPages = 999;
+  public paginationActivated = true;
 
   opened = false;
   private lastElement: Product;
   private previousElements: string[] = [];
 
+  public searchByEANCODE: string;
+  public categories: { name: string, categories: { value: string, viewValue: string }[] }[] =
+    [
+      {
+        name: 'Computers',
+        categories: [
+          {viewValue: 'Laptops', value: 'Hardware>Computers>Computers>Laptops'},
+          {viewValue: 'Desktops', value: 'Hardware>Computers>Computers>Desktops'},
+          {viewValue: 'Power Supply Adapters', value: 'Hardware>Computers>Accessoires>Voedingadapters'},
+          {viewValue: 'Keyboard and mouse', value: 'Hardware>Computers>Randapparatuur>Toetsenbord_en_muis_sets'},
+          {viewValue: 'Batteries', value: 'Hardware>Computers>Accessoires>Opladers_en_batterijen'},
+          {viewValue: 'POS Terminals', value: 'Hardware>Computers>Computers>POS_terminals'},
+          {viewValue: 'Sleeves and covers', value: 'Hardware>Computers>Accessoires>Sleeves_en_hoezen'},
+          {viewValue: 'Pen', value: 'Hardware>Computers>Randapparatuur>Pennen'},
+          {viewValue: 'mouse', value: 'Hardware>Computers>Randapparatuur>Muizen'},
+          {viewValue: 'Keyboards', value: 'Hardware>Computers>Randapparatuur>Toetsenborden'},
+          {viewValue: 'koffers', value: 'Hardware>Computers>Accessoires>Koffers_en_tassen'},
+          {viewValue: 'Tablet Keyboards', value: 'Hardware>Computers>Accessoires>Tablet_toetsenborden'},
+        ]
+      },
+      {
+        name: 'Printers',
+        categories: [
+            {viewValue: 'laser Printers', value: 'Hardware>Printers_en_scanners>Printers>Laser_printers'},
+            {viewValue: 'Label Printers', value: 'Hardware>Printers_en_scanners>Printers>Labelprinters'},
+        ]
+      },
+      {
+        name: 'Monitors',
+        categories: [
+            {viewValue: 'Monitor', value: 'Hardware>Beeld_en_geluid>Monitoren>Televisies'},
+            {viewValue: 'Desktop Monitors', value: 'Hardware>Beeld_en_geluid>Monitoren>Desktop_monitoren'},
+            {viewValue: 'Video Splitters', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Video_splitters'},
+            {viewValue: 'Monitors accessories', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Beeld_accessoires'},
+            {viewValue: 'Cables adapters', value: 'Hardware>Beeld_en_geluid>Kabels>Adapters'},
+            {viewValue: 'Wall brackets', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Muursteunen'},
+        ]
+      },
+      {
+        name: 'Servers and Storage',
+        categories: [
+            {viewValue: 'Backup and storage ', value: 'Hardware>Servers_en_storage>Backup_en_storage>UPS'},
+            {viewValue: 'Montage kits ', value: 'Hardware>Servers_en_storage>Accessoires>Montagekits'},
+            {viewValue: 'Servers batteries', value: 'Hardware>Servers_en_storage>Server_en_back-up_onderdelen>Accu\'s_en_batterijen'},
+        ]
+      },
+    ];
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   constructor(
     private productService: ProductService,
     private authService: AuthService,
-    private router: Router,
+    // private router: Router,
     public dialog: MatDialog,
     public snack: MatSnackBar
   ) {
@@ -50,6 +97,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     if (!this.authService.loggedIn.getValue()) {
+      this.isLoading = true;
       // this.router.navigate(['/login']);
     }
   }
@@ -84,10 +132,24 @@ export class ProductComponent implements AfterViewInit, OnInit {
     });
   }
 
+  getByCategory(category: string) {
+    if (category === undefined) {
+      this.getData(this.pageSize, 'undefined');
+      this.paginationActivated = true;
+    } else {
+      this.isLoading = true;
+      this.productService.getByCategory(category).subscribe(res => {
+        this.dataSource.data = res;
+        this.lastElement = res.pop();
+        this.isLoading = false;
+        this.paginationActivated = false;
+      });
+    }
+  }
+
   // managing pages
 
   decrementPageIndex() {
-    console.log('previous ...');
     this.page--;
     this.getData(this.pageSize, this.previousElements[this.page - 1]);
   }
@@ -97,7 +159,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
     this.page = this.page + 1;
     this.getData(this.pageSize, this.lastElement.productId);
 
-    console.log('previous page list ' + this.previousElements);
 
   }
 
@@ -148,9 +209,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Deleting ' + product.productId);
         this.productService.delete(product.productId).subscribe((data: any) => {
-          console.log(JSON.stringify(data));
           this.openSnack(data);
           if (data.success) {
           }
