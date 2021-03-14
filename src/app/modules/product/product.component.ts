@@ -79,6 +79,9 @@ export class ProductComponent implements AfterViewInit, OnInit {
       this.dataSource.data = res;
       this.lastElement = res.pop();
       this.isLoading = false;
+    }, error => {
+      this.openSnack({message: 'Oops Something went wrong ! :' + error.message});
+      this.isLoading = false;
     });
   }
 
@@ -89,7 +92,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
         this.edit(res);
       },
       error => {
-        this.openSnack({ message: 'Product not found ! '});
+        this.openSnack({message: 'Product not found ! '});
         this.isLoading = false;
       });
   }
@@ -102,9 +105,12 @@ export class ProductComponent implements AfterViewInit, OnInit {
       this.isLoading = true;
       this.productService.getByCategory(category).subscribe(res => {
         this.dataSource.data = res;
-        this.lastElement = res.pop();
+        // this.lastElement = res.pop();
         this.isLoading = false;
         this.paginationActivated = false;
+      }, error => {
+        this.openSnack({message: 'Oops Something went wrong ! :' + error.message});
+        this.isLoading = false;
       });
     }
   }

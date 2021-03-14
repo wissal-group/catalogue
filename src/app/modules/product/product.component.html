@@ -123,6 +123,10 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
 
+      <!-- Message for empty data  -->
+      <div class="mat-table__message" *ngIf="(dataSource.data.length == 0) && !isLoading">We are working on adding more products, Please check later </div>
+      <div class="mat-table__message" *ngIf="isLoading">Please wait....</div>
+
 
       <div *ngIf="paginationActivated" class="cmd-paginator">
         <div class="element-per-page">
