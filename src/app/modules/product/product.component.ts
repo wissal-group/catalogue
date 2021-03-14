@@ -10,6 +10,7 @@ import {AuthService} from '~services/auth.service';
 import {ConfirmComponent} from '~components/confirm/confirm.component';
 import {FormsComponent} from '~modules/product/forms/forms.component';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
+import {categories} from '~base/config';
 
 
 @Component({
@@ -19,69 +20,20 @@ import {SnackbarComponent} from '~components/snackbar/snackbar.component';
   providers: [ProductService]
 })
 export class ProductComponent implements AfterViewInit, OnInit {
-  public displayedColumns = ['id', 'productId', 'categoryId', 'vendorCode', 'createDate', 'image', 'descriptionDetails', 'personid'];
+  public displayedColumns = ['id', 'productId', 'categoryId', 'vendorCode', 'createDate', 'image', 'descriptionDetails', 'actions'];
   public pageSizeOptions = [20, 50, 100, 200, 500];
   public pageSize = 50;
   public dataSource = new MatTableDataSource<any>();
   public page = 1;
   public isLoading: boolean;
   public isTotalReached = false;
-  public totalItems = 99999;
-  public search = '';
-
   public paginationActivated = true;
-
   opened = false;
   private lastElement: Product;
   private previousElements: string[] = [];
 
   public searchByEANCODE: string;
-  public categories: { name: string, categories: { value: string, viewValue: string }[] }[] =
-    [
-      {
-        name: 'Computers',
-        categories: [
-          {viewValue: 'Laptops', value: 'Hardware>Computers>Computers>Laptops'},
-          {viewValue: 'Desktops', value: 'Hardware>Computers>Computers>Desktops'},
-          {viewValue: 'Power Supply Adapters', value: 'Hardware>Computers>Accessoires>Voedingadapters'},
-          {viewValue: 'Keyboard and mouse', value: 'Hardware>Computers>Randapparatuur>Toetsenbord_en_muis_sets'},
-          {viewValue: 'Batteries', value: 'Hardware>Computers>Accessoires>Opladers_en_batterijen'},
-          {viewValue: 'POS Terminals', value: 'Hardware>Computers>Computers>POS_terminals'},
-          {viewValue: 'Sleeves and covers', value: 'Hardware>Computers>Accessoires>Sleeves_en_hoezen'},
-          {viewValue: 'Pen', value: 'Hardware>Computers>Randapparatuur>Pennen'},
-          {viewValue: 'mouse', value: 'Hardware>Computers>Randapparatuur>Muizen'},
-          {viewValue: 'Keyboards', value: 'Hardware>Computers>Randapparatuur>Toetsenborden'},
-          {viewValue: 'koffers', value: 'Hardware>Computers>Accessoires>Koffers_en_tassen'},
-          {viewValue: 'Tablet Keyboards', value: 'Hardware>Computers>Accessoires>Tablet_toetsenborden'},
-        ]
-      },
-      {
-        name: 'Printers',
-        categories: [
-          {viewValue: 'laser Printers', value: 'Hardware>Printers_en_scanners>Printers>Laser_printers'},
-          {viewValue: 'Label Printers', value: 'Hardware>Printers_en_scanners>Printers>Labelprinters'},
-        ]
-      },
-      {
-        name: 'Monitors',
-        categories: [
-          {viewValue: 'Monitor', value: 'Hardware>Beeld_en_geluid>Monitoren>Televisies'},
-          {viewValue: 'Desktop Monitors', value: 'Hardware>Beeld_en_geluid>Monitoren>Desktop_monitoren'},
-          {viewValue: 'Video Splitters', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Video_splitters'},
-          {viewValue: 'Monitors accessories', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Beeld_accessoires'},
-          {viewValue: 'Cables adapters', value: 'Hardware>Beeld_en_geluid>Kabels>Adapters'},
-          {viewValue: 'Wall brackets', value: 'Hardware>Beeld_en_geluid>Beeld_accessoires>Muursteunen'},
-        ]
-      },
-      {
-        name: 'Servers and Storage',
-        categories: [
-          {viewValue: 'Backup and storage ', value: 'Hardware>Servers_en_storage>Backup_en_storage>UPS'},
-          {viewValue: 'Montage kits ', value: 'Hardware>Servers_en_storage>Accessoires>Montagekits'},
-          {viewValue: 'Servers batteries', value: 'Hardware>Servers_en_storage>Server_en_back-up_onderdelen>Accu\'s_en_batterijen'},
-        ]
-      },
-    ];
+  public categories: { name: string, categories: { value: string, viewValue: string }[] }[] = categories;
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
@@ -97,7 +49,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     if (!this.authService.loggedIn.getValue()) {
       this.isLoading = true;
-      // this.router.navigate(['/login']);
     }
   }
 
@@ -178,33 +129,15 @@ export class ProductComponent implements AfterViewInit, OnInit {
     this.getData(this.pageSize, 'undefined');
   }
 
-  verifyInputPageIndex() {
-  }
-
-
   edit(product: Product): void {
     const dialogRef = this.dialog.open(FormsComponent, {
       width: '1800px',
       height: '100%',
-      // scrollStrategy:,
       data: {title: 'Update person', action: 'edit', data: product}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      }
-    });
-  }
-
-  save(): void {
-    const dialogRef = this.dialog.open(FormsComponent, {
-      width: '400px',
-      data: {title: 'Add person', action: 'save'}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
   }
@@ -226,17 +159,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
         });
       }
     });
-  }
-
-
-  open(): number {
-    if (this.opened) {
-      this.opened = true;
-      return 999;
-    } else {
-      this.opened = false;
-      return 30;
-    }
   }
 
 }
