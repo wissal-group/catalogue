@@ -13,6 +13,13 @@ td, th {
 /*tr:nth-child(even) {*/
 /*  background-color: #dddddd;*/
 /*}*/
-.no-border{
+.no-border {
   border: 0px white !important;
+}
+
+.input-table {
+  border-style: solid;
+  border-width: thin;
+  border-color: #bbbbbb;
+  padding: 5px;
 }

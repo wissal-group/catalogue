@@ -1,42 +1,32 @@
-<div fxLayout="column">
-  <h1 mat-dialog-title>Characteristics </h1>
+<h1 mat-dialog-title>Characteristics </h1>
 
-  <table role="list">
+<div fxLayout="row">
+  <form fxFlex="49" [formGroup]="charNamesForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="charNames">
 
-    <ng-container *ngFor="let charType of characteristics[0] | keyvalue">
-      <tr>
-        <td class="no-border"><b>{{charType.key}} :</b></td>
-      </tr>
-      <ng-container *ngFor="let characteristic of charType.value | keyvalue">
-        <tr>
-          <td>{{characteristic.key}}</td>
-          <td> {{characteristic.value}} </td>
-        </tr>
-      </ng-container>
-      <br><br><br>
-    </ng-container>
+      <!--    <h3>Aliases</h3> <button (click)="addCharKey()">Add Alias</button>-->
+      <div *ngFor="let cherKey of charNames.controls; let i=index">
+        <div *ngIf="positions[i][1]" style="margin: 10px">
+<!--          <button (click)="addCharName()">Add Characteristic</button>-->
+          <b>{{positions[i][1]}} : </b> <br>
+        </div>
+        <!-- The repeated alias template -->
+        <input class="input-table" matInput type="text" [formControlName]="i">
+      </div>
+    </div>
+  </form>
 
-  </table>
+  <form fxFlexOffset="1" fxFlex="49" [formGroup]="charValuesForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="charValues">
+      <div *ngFor="let cherKey of charValues.controls; let i=index">
+        <div *ngIf="positions[i][1]" style="margin: 10px"><br></div>
+
+        <!-- The repeated alias template -->
+        <input class="input-table" matInput type="text" [formControlName]="i" style="border-left-width: 0">
+      </div>
+    </div>
+  </form>
+
 </div>
-
-<!--<form [formGroup]="characteristicsForm" (ngSubmit)="onSubmit()">-->
-<!--  <div formArrayName="charKeysInputs">-->
-<!--    <h3>Aliases</h3> <button (click)="addCharKey()">Add Alias</button>-->
-
-<!--    <div *ngFor="let cherKey of charKeysInputs.controls; let i=index">-->
-<!--      &lt;!&ndash; The repeated alias template &ndash;&gt;-->
-<!--      <label>-->
-<!--        <input type="text" [formControlName]="i">:-->
-<!--      </label>-->
-<!--    </div>-->
-<!--    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-<!--    <div *ngFor="let charValue of charValuesInputs.controls; let j=index">-->
-<!--      &lt;!&ndash; The repeated alias template &ndash;&gt;-->
-<!--      <label>-->
-<!--        <input type="text" [formControlName]="j+12">:-->
-<!--      </label>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</form>-->
 
 
