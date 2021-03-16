@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, NgZone, ElementRef, ViewChild, Renderer2 } from '@angular/core';
-import { Router, Event as RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import {ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Event as RouterEvent, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {MatDialog} from '@angular/material/dialog';
+import {Observable} from 'rxjs';
 
-import { AuthService } from '~services/auth.service';
-import { ConfirmComponent } from '~components/confirm/confirm.component';
+import {AuthService} from '~services/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -19,7 +18,7 @@ export class AdminLayoutComponent implements OnInit {
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
 
-  @ViewChild('progressBar', { static: false })
+  @ViewChild('progressBar', {static: false})
   progressBar: ElementRef;
 
   constructor(
@@ -27,7 +26,6 @@ export class AdminLayoutComponent implements OnInit {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     public dialog: MatDialog,
-
     private router: Router,
     private ngZone: NgZone,
     private renderer: Renderer2
@@ -49,26 +47,6 @@ export class AdminLayoutComponent implements OnInit {
     this.mobileQuery.removeListener(this.mobileQueryListener);
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmComponent, {
-      width: '250px',
-      data: {
-        title: 'Logout',
-        message: 'Close session?'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.authService.logout().subscribe((data: any) => {
-          if (data.success) {
-            this.authService.loggedIn.next(false);
-            localStorage.removeItem('token');
-            // this.router.navigate(['/login']);
-          }
-        });
-      }
-    });
-  }
 
   // PROGRESS BAR
   private _navigationInterceptor(event: RouterEvent): void {
@@ -92,6 +70,10 @@ export class AdminLayoutComponent implements OnInit {
         this.hideProgressBar();
       }, 1000);
     }
+  }
+
+  changeTheme() {
+
   }
 
   private hideProgressBar(): void {

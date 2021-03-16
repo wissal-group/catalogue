@@ -90,7 +90,7 @@
 
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-          <mat-cell *matCellDef="let row"><img style="width:80px" [src]="row?.thumbURL[0]"/></mat-cell>
+          <mat-cell *matCellDef="let row"><img style="width:80px" *ngIf="row?.thumbURL[0]" [src]="row?.thumbURL[0]" style="border-style: solid; border-width: 1px ;color: black ; margin:3px "/></mat-cell>
         </ng-container>
 
 
@@ -131,7 +131,7 @@
       <div *ngIf="paginationActivated" class="cmd-paginator">
         <div class="element-per-page">
           <div>previous items : {{page * pageSize}}</div>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" style="color: black !important;">
             <mat-select [(value)]="pageSize" (valueChange)="pageSizeChanged()">
               <mat-option *ngFor="let op of pageSizeOptions" [value]="op">{{op}}</mat-option>
             </mat-select>
@@ -144,7 +144,7 @@
               <span class="material-icons">navigate_before</span>
             </button>
           </div>
-          <mat-form-field appearance="outline" style="width: 100%!important; align-content: center">
+          <mat-form-field appearance="outline" style="width: 100%!important; align-content: center" style="color: black !important;">
             <input disabled style="align-content: center" matInput type="number" placeholder="" [(ngModel)]="page">
             <span matSuffix></span>
           </mat-form-field>
