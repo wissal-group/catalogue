@@ -8,7 +8,7 @@
       <div *ngFor="let cherKey of charNames.controls; let i=index">
         <div *ngIf="positions[i][1]" style="margin: 10px">
 <!--          <button (click)="addCharName()">Add Characteristic</button>-->
-          <b>{{positions[i][1]}} : </b> <br>sssss
+          <b>{{positions[i][1]}} : </b> <br>
         </div>
         <!-- The repeated alias template -->
         <input class="input-table" matInput type="text" [formControlName]="i">
