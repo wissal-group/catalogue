@@ -3,24 +3,6 @@
 
 Complete CRUD with Angular, Angular Material, sessions, JSON Web Token (JWT), routes & pagination.
 
-## Backend
-You can use this repo with these backends examples:
-
-| Framework | DataBase | Repo |
-| --- | --- | --- |
-| NodeJS with ExpressJS 📦 | PosgreSQL with MassiveJS | [node-js-api-massive-js](https://github.com/edgarMejia/node-js-api-massive-js). |
-| NodeJS with ExpressJS 📦 | MongoDB with Mongoose | WIP |
-| Python 🐍 with Flask 🌶 | PostgreSQL | WIP |
-
-## Screenshots
-
-<p>
-    <img src="/capturas/login.png" alt="screenshot" align="center">
-</p>
-<p align="center">
-    <img src="/capturas/grid-v3.png" alt="screenshot" align="center">
-</p>
-
 ## Get the code
 
 ```
