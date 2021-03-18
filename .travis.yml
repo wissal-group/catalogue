@@ -7,7 +7,7 @@ branches:
   only:
     - master
 before_script:
-  - npm ci -g @angular/cli
+  - npm install -g @angular/cli
 script:
   - ng lint
   - ng build --prod --output-path docs
