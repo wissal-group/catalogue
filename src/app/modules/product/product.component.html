@@ -2,8 +2,8 @@
   <mat-card>
     <mat-card-header>
       <i class="material-icons">supervised_user_circle</i>
-      <mat-card-title>Products</mat-card-title>
-      <mat-card-subtitle>Add, update or delete products</mat-card-subtitle>
+      <mat-card-title>Produits</mat-card-title>
+      <mat-card-subtitle>Ajouter, Modifier ou Supprimer des produits</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -18,7 +18,7 @@
         <div>
           <!--  Get by EAN CODE        -->
           <mat-form-field class="example-form-field">
-            <mat-label>Enter EAN Code</mat-label>
+            <mat-label>Entrer le code EAN</mat-label>
             <input type="number" matInput type="text" [(ngModel)]="searchByEANCODE" #eancode>
             <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="Clear"
                     (click)="searchByEANCODE=''">
@@ -32,9 +32,9 @@
           <!--  SELECT CATEGORY        -->
 
           <mat-form-field>
-            <mat-label>Select a category</mat-label>
+            <mat-label>Choisir une categorie</mat-label>
             <mat-select #select (valueChange)="getByCategory(select.value)">
-              <mat-option>ALL</mat-option>
+              <mat-option>TOUS</mat-option>
 
               <mat-optgroup *ngFor="let group of categories" [label]="group.name">
                 <mat-option *ngFor="let category of group.categories" [value]="category.value">
@@ -48,7 +48,7 @@
           <!-- Add button -->
           <button mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
-            Add new
+            Ajouter Nouveau
           </button>
         </div>
       </div>
@@ -62,29 +62,29 @@
         </ng-container>
 
         <ng-container matColumnDef="productId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>ProductRef</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Code EAN</mat-header-cell>
           <mat-cell *matCellDef="let row">{{ row.productId}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="categoryId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Categorie</mat-header-cell>
           <mat-cell *matCellDef="let row" [matTooltip]="row.categoryId"
                     [matTooltipClass]="'large'">{{ row.categoryId  | slice:0:20}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="vendorCode">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Vendor Code</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Code Vendeur</mat-header-cell>
           <mat-cell *matCellDef="let row">{{ row.VendorCode }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="descriptionDetails">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Description Details</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
           <mat-cell *matCellDef="let row">{{ row.descriptionDetails | slice:0:100  }}...</mat-cell>
         </ng-container>
 
 
         <ng-container matColumnDef="createDate">
-          <mat-header-cell *matHeaderCellDef>Created at</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Date de creation</mat-header-cell>
           <mat-cell *matCellDef="let row">{{ row.createDate | date:'dd/MM/yyyy' }}</mat-cell>
         </ng-container>
 
@@ -109,11 +109,11 @@
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="edit(row)">
                 <mat-icon aria-label="Edit">create</mat-icon>
-                Edit
+                Modifier
               </button>
               <button mat-menu-item (click)="delete(row)">
                 <mat-icon aria-label="Delete">clear</mat-icon>
-                Delete
+                Supprimer
               </button>
             </mat-menu>
           </mat-cell>
