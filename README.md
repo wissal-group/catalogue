@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/wissal-group/catalogue.svg?branch=master)](https://travis-ci.com/wissal-group/catalogue)
 # Angular-CRUD
 
 Complete CRUD with Angular, Angular Material, sessions, JSON Web Token (JWT), routes & pagination.
