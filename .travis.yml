@@ -11,7 +11,7 @@ before_script:
 script:
   - ng build --prod --output-path docs
   - cp docs/index.html docs/404.html
-  - echo wi-keys.com > CNAME
+  - echo wi-keys.com > docs/CNAME
 
 deploy:
   provider: pages
