@@ -10,6 +10,7 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng build --prod --output-path docs
+  - cp docs/index.html docs/404.html
 
 deploy:
   provider: pages
