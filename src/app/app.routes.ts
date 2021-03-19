@@ -8,8 +8,7 @@ import { AuthGuard } from '~guards/auth.guard';
 import { AdminLayoutComponent } from '~modules/admin-layout/admin-layout.component';
 import { LoginLayoutComponent } from '~modules/login-layout/login-layout.component';
 
-/*CON LA CREACIÓN DEL ARCHIVO INDEX.PAGES NOS AHORRAMOS TENER QUE HACER
-UNA IMPORTACIÓN POR CADA COMPONENTE DE LAS VISTAS*/
+
 import {
   NotFoundComponent,
 } from '~utils/index.pages';
@@ -19,15 +18,17 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
         loadChildren: '~modules/dashboard/dashboard.module#DashboardModule',
+
       },
       {
         path: 'products',
         loadChildren: '~modules/product/product.module#ProductModule',
+
       },
       {
         path: 'users',

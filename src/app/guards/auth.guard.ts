@@ -18,8 +18,8 @@ export class AuthGuard implements CanActivate {
       map((isLoggedIn: boolean) => !!isLoggedIn),
       tap(authenticated => {
         if (!authenticated) {
-          // this.router.navigate(['/login']);
-          return true;
+           this.router.navigate(['/login']);
+          return false;
         }
         return true;
       })
@@ -27,6 +27,4 @@ export class AuthGuard implements CanActivate {
   }
 }
 
-/*ESTE ARCHIVO ES UTILIZADO POR EL MODULO DE ROUTES PARA VERIFICAR SI EXISTE UNA SESIÓN
-INICIADA O NO, EL METODO canActivate() INVOCA A UN METODO BOOLEANO EN EL AuthService QUE
-SE SETEA COMO 'TRUE' AL INICIAR SESIÓN CORRECTAMENTE Y COMO 'FALSE' AL CERRAR SESIÓN.*/
+

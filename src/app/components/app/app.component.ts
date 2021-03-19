@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ConfirmComponent} from '~components/confirm/confirm.component';
 import {AuthService} from '~services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
+    private router: Router,
   ) {
 
 
@@ -31,13 +33,9 @@ export class AppComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.authService.logout().subscribe((data: any) => {
-          if (data.success) {
-            this.authService.loggedIn.next(false);
-            localStorage.removeItem('token');
-            // this.router.navigate(['/login']);
-          }
-        });
+        this.authService.logout();
+        this.authService.loggedIn.next(false);
+        this.router.navigate(['/login']);
       }
     });
   }

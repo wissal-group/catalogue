@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  loginUrl: 'https://service-user-pool-domain-dev-wi-keys.auth.eu-west-3.amazoncognito.com/login?response_type=token&client_id=d7qn3pkeoa6kh9tsfkbh038er&redirect_uri=http://localhost:4200/login',
 };
