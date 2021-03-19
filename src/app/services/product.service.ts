@@ -15,18 +15,26 @@ export class ProductService {
   ) {
   }
 
-  headers = {
-    // 'Authorization': 'JWT ' + localStorage.getItem('token')
-    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
-    'Access-Control-Allow-Origin': '*'
+  headersdd = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   };
 
+  headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Headers' : 'Content-Type, Authorization',
+    'Content-Type': 'application/json; charset=utf-8',
+     'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
+    'Access-Control-Allow-Credentials': 'true',
+  });
 
 
   getList(pageSize: number, lastElement: string): Observable<Product[]> {
     const res = this.http.get<Product[]>(
       CONSTANST.routes.product.list + '/' + pageSize + '/' + lastElement,
-      // {headers: this.headers, params: params}
+      {headers: this.headers}
     );
     return res;
   }
@@ -36,7 +44,7 @@ export class ProductService {
     const params = new HttpParams().set('categoryId', category);
     const res = this.http.get<Product[]>(
       CONSTANST.routes.product.category,
-      {  params: params}
+      {headers: this.headers, params: params}
     );
     return res;
   }
@@ -49,7 +57,7 @@ export class ProductService {
 
   getOne(id: number): Observable<Product> {
     return this.http.get<Product>(
-      CONSTANST.routes.product.get.replace(':id', String(id)),
+      CONSTANST.routes.product.get.replace(':id', String(id)), {headers: this.headers}
     );
   }
 

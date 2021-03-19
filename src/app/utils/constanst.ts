@@ -1,4 +1,4 @@
-const HOST = 'https://bbusyzb87h.execute-api.eu-west-3.amazonaws.com/prod';
+const HOST = ' https://10xisq4pdi.execute-api.eu-west-3.amazonaws.com';
 
 export const CONSTANST = {
   permissions: {},
