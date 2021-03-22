@@ -29,7 +29,7 @@
           <mat-form-field>
             <input matInput placeholder="Product name" formControlName="title" class="person-input">
             <mat-hint align="end">{{frm.controls.title.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="frm.controls.title.invalid">{{getNameErrorMessage()}}</mat-error>
+            <mat-error *ngIf="frm.controls.title.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <br/>
@@ -37,26 +37,26 @@
           <mat-form-field>
             <input matInput placeholder="Product EAN" formControlName="productId" class="person-input">
             <mat-hint align="end">{{frm.controls.productId.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="frm.controls.productId.invalid">{{getLastNameErrorMessage()}}</mat-error>
+            <mat-error *ngIf="frm.controls.productId.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <input matInput placeholder="Category" formControlName="categoryId" class="person-input">
             <mat-hint align="end">{{frm.controls.categoryId.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="frm.controls.categoryId.invalid">{{getLastNameErrorMessage()}}</mat-error>
+            <mat-error *ngIf="frm.controls.categoryId.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="vendor Code" formControlName="vendorCode" class="person-input">
-            <mat-hint align="end">{{frm.controls.vendorCode.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="frm.controls.vendorCode.invalid">{{getLastNameErrorMessage()}}</mat-error>
+            <input matInput placeholder="vendor Code" formControlName="VendorCode" class="person-input">
+            <mat-hint align="end">{{frm.controls.VendorCode.value?.length || 0}}/10</mat-hint>
+            <mat-error *ngIf="frm.controls.VendorCode.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
           <textarea matInput placeholder="description " formControlName="descriptionDetails" class="person-input"
                     rows="10"></textarea>
             <mat-hint align="end">{{frm.controls.descriptionDetails.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="frm.controls.descriptionDetails.invalid">{{getLastNameErrorMessage()}}</mat-error>
+            <mat-error *ngIf="frm.controls.descriptionDetails.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
         </form>
@@ -70,7 +70,7 @@
           <img style="max-width: 100%" [src]="displayedImage">
         </ng-container>
         <ng-template #noImage>
-          <img width="100%"
+          <img width="400px"
                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png">
 
         </ng-template>
@@ -96,7 +96,7 @@
   <mat-divider></mat-divider>
   <br>
   <!--  characteristics table-->
-  <app-chars-table [characteristics]="data.data.characteristics"></app-chars-table>
+  <app-chars-table (savedCharacteristics)="saveCharacteristics($event)" [characteristics]="data.data.characteristics"></app-chars-table>
 
 
 </div>

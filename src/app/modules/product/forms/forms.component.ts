@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {ProductService} from '~services/product.service';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
+import {Product} from '~models/product';
 
 @Component({
   selector: 'app-forms',
@@ -15,6 +16,8 @@ import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 export class FormsComponent implements OnInit {
   public frm: FormGroup;
   public mode: string;
+
+  public product: Product;
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -35,8 +38,25 @@ export class FormsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.data.data) {
+      this.data.data = {
+        productId: '',
+        categoryId: '',
+        characteristics: [{'': {'': ''}}],
+        createDate: '',
+        descriptionDetails: '',
+        VendorCode: '',
+        imgURL: '',
+        modifyDate: '',
+        thumbURL: [],
+        timestamp: '',
+        title: '',
+      };
+    }
     this.initializeForm();
     this.displayedImage = this.data.data.imgURL[0];
+    this.product = this.data.data;
+
   }
 
   changeImage(url: string) {
@@ -52,26 +72,49 @@ export class FormsComponent implements OnInit {
 
   private initializeForm() {
     this.mode = this.data.action;
-    const data = this.data.data;
-
+    const data: Product = this.data.data;
     this.frm = this.fb.group({
       title: new FormControl(data.title),
       categoryId: new FormControl(data.categoryId, [Validators.required, Validators.minLength(3)]),
       productId: new FormControl(data.productId, [Validators.required, Validators.minLength(3)]),
       descriptionDetails: new FormControl(data.descriptionDetails, [Validators.required]),
-      vendorCode: new FormControl(data.VendorCode),
+      VendorCode: new FormControl(data.VendorCode),
 
     });
   }
 
   public save(form: FormGroup) {
-    this.productService.save(form.value).subscribe((data: any) => {
-      this.openSnack(data);
 
-      if (data.success) {
-        this.dialogRef.close(true);
-      }
+    Object.keys(form.value).forEach(key => {
+      this.product[key] = form.controls[key].value;
     });
+    this.product.modifyDate = Date.now().toString();
+    console.log(this.product);
+
+    if (this.mode === 'create') {
+      this.product.createDate = Date.now().toString();
+      this.productService.save(this.product).subscribe((data: any) => {
+        this.openSnack({message: 'Product Added Successfully !'});
+
+        if (data.success) {
+          this.dialogRef.close(true);
+        }
+      });
+    } else {
+      this.productService.update(this.product).subscribe((data: any) => {
+        this.openSnack({message: 'Product Updated Successfully !'});
+
+        if (data.success) {
+          this.dialogRef.close(true);
+        }
+      });
+    }
+
+  }
+
+
+  saveCharacteristics(event) {
+    this.product.characteristics = event;
   }
 
 
@@ -79,23 +122,11 @@ export class FormsComponent implements OnInit {
     this.fileInput.nativeElement.click();
   }
 
-  public getNameErrorMessage() {
-    return this.frm.controls.first_name.hasError('required') ? 'First name is required' :
-      this.frm.controls.name.hasError('minlength') ? 'min length is 2' : '';
+
+  public getErrorMessage() {
+    return this.frm.controls.productId.hasError('required') ? 'This Field is required' :
+      this.frm.controls.productId.hasError('minlength') ? 'min length is 2' : '';
   }
 
-  public getLastNameErrorMessage() {
-    return this.frm.controls.last_name.hasError('required') ? 'Last name is required' :
-      this.frm.controls.name.hasError('minlength') ? 'min length is 2' : '';
-  }
-
-  public getAgeErrorMessage() {
-    return this.frm.controls.age.hasError('required') ? 'Age is required' :
-      this.frm.controls.age.hasError('minlength') ? 'Min lenght is 2' : '';
-  }
-
-  public getGenderErrorMessage() {
-    return this.frm.controls.gender.hasError('required') ? '' : '';
-  }
 
 }

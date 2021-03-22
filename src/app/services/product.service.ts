@@ -23,10 +23,10 @@ export class ProductService {
 
   headers = new HttpHeaders({
     'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    'Access-Control-Allow-Origin' : '*',
-    'Access-Control-Allow-Headers' : 'Content-Type, Authorization',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json; charset=utf-8',
-     'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
+    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
     'Access-Control-Allow-Credentials': 'true',
   });
 
@@ -64,17 +64,16 @@ export class ProductService {
   save(product: Product): Observable<Response> {
     return this.http.post<Response>(
       CONSTANST.routes.product.save,
-      {
-        productId: product.productId,
-        // todo compelete this shit
-
-        // txtLastName: product.last_name,
-        // txtAge: product.age,
-        // txtGender: product.gender,
-        // id: product.id
-      },
-      // {headers: this.headers}
+      product,
+      {headers: this.headers}
     );
   }
 
+  update(product: Product): Observable<Response> {
+    return this.http.put<Response>(
+      CONSTANST.routes.product.get.replace(':id', String(product.productId)),
+      product,
+      {headers: this.headers}
+    );
+  }
 }

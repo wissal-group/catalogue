@@ -1,32 +1,64 @@
-<h1 mat-dialog-title>Characteristics </h1>
+<div fxLayout="column">
+  <div fxLayout="row" fxFlex="100">
+    <!--  <h1 >Characteristics </h1>-->
+    <div fxFlex fxLayoutAlign="end top">
+      <button  mat-raised-button color="primary" (click)="saveCharacteristics()"> Save Characteristics</button>
+    </div>
+  </div>
+  <div fxLayout="column">
+    <ng-container *ngFor="let form of charFormList; let i=index">
+      <form [formGroup]="form" fxLayout="column">
+        <!--name-->
+        <div fxLayout="row">
+          <mat-form-field style=" font-weight: bold">
+            <input matInput placeholder="Group Name" [formControlName]="'charType'">
+          </mat-form-field>
 
-<div fxLayout="row">
-  <form fxFlex="49" [formGroup]="charNamesForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="charNames">
-
-      <!--    <h3>Aliases</h3> <button (click)="addCharKey()">Add Alias</button>-->
-      <div *ngFor="let cherKey of charNames.controls; let i=index">
-        <div *ngIf="positions[i][1]" style="margin: 10px">
-<!--          <button (click)="addCharName()">Add Characteristic</button>-->
-          <b>{{positions[i][1]}} : </b> <br>
+          <div style="margin-left: 2px; margin-top: 16px">
+            <button mat-icon-button color="warn" style=" height: 20px; width: 20px" matTooltip="supprimer le groupe"
+                    (click)="removeGroup(i)" > <mat-icon style="vertical-align: baseline;">remove</mat-icon>
+            </button>
+          </div>
         </div>
-        <!-- The repeated alias template -->
-        <input class="input-table" matInput type="text" [formControlName]="i">
-      </div>
-    </div>
-  </form>
 
-  <form fxFlexOffset="1" fxFlex="49" [formGroup]="charValuesForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="charValues">
-      <div *ngFor="let cherKey of charValues.controls; let i=index">
-        <div *ngIf="positions[i][1]" style="margin: 10px"><br></div>
+        <div fxLayout="row">
+          <!-- keys-->
+          <div fxFlex="50" formArrayName="charKeys">
+            <div *ngFor="let control of getCharKeys(i).controls; index as j">
+              <mat-form-field class="" style="width: 100%">
+                <input  matInput [formControlName]="j">
+                <mat-error>name is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- values-->
+          <div  fxFlex="50" formArrayName="charValues">
+            <div fxLayout="row" *ngFor="let control of getCharValues(i).controls; index as k" >
+              <mat-form-field style="width: 100%">
+                <input class="" matInput [formControlName]="k">
+                <mat-error> value is required</mat-error>
+              </mat-form-field>
+              <div style="margin-left: 2px; margin-top: 16px">
+                <button mat-icon-button color="warn" matTooltip="supprimer la ligne"
+                        (click)="removeKeyValue(i, k)" > <mat-icon style="vertical-align: baseline;">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!-- The repeated alias template -->
-        <input class="input-table" matInput type="text" [formControlName]="i" style="border-left-width: 0">
-      </div>
-    </div>
-  </form>
 
+        <div fxLayoutAlign="end center">
+          <button mat-icon-button matTooltip="ajouter une ligne"
+                  (click)="addKeyValue(i)"> <mat-icon >add</mat-icon>
+          </button>
+        </div>
+
+      </form>
+    </ng-container>
+    <button mat-raised-button color="accent" (click)="addGroup()">Add Group</button>
+  </div>
 </div>
+
 
 

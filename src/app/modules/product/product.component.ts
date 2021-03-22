@@ -148,6 +148,19 @@ export class ProductComponent implements AfterViewInit, OnInit {
     });
   }
 
+  create(): void {
+    const dialogRef = this.dialog.open(FormsComponent, {
+      width: '1800px',
+      height: '100%',
+      data: {title: 'Create Product', action: 'create', data: null}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
   delete(product: Product): void {
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '250px',
