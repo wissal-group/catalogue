@@ -25,6 +25,7 @@ import {ProductService} from '~app/services/product.service';
 import {UserModule} from '~modules/user/user.module';
 import {AdminLayoutModule} from '~modules/admin-layout/admin-layout.module';
 import {LoginLayoutModule} from '~modules/login-layout/login-layout.module';
+import {httpInterceptorProviders} from '~utils/interceptors';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {LoginLayoutModule} from '~modules/login-layout/login-layout.module';
     AuthGuard,
     AuthService,
     UserService,
-    ProductService
+    ProductService,
+    httpInterceptorProviders,
   ],
   entryComponents: [
     ConfirmComponent,

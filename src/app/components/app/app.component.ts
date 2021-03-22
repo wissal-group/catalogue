@@ -35,7 +35,6 @@ export class AppComponent {
       if (result) {
         this.authService.logout();
         this.authService.loggedIn.next(false);
-        this.router.navigate(['/login']);
       }
     });
   }

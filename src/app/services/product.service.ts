@@ -15,26 +15,10 @@ export class ProductService {
   ) {
   }
 
-  headersdd = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-  };
-
-  headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
-    'Access-Control-Allow-Credentials': 'true',
-  });
-
 
   getList(pageSize: number, lastElement: string): Observable<Product[]> {
     const res = this.http.get<Product[]>(
       CONSTANST.routes.product.list + '/' + pageSize + '/' + lastElement,
-      {headers: this.headers}
     );
     return res;
   }
@@ -44,36 +28,32 @@ export class ProductService {
     const params = new HttpParams().set('categoryId', category);
     const res = this.http.get<Product[]>(
       CONSTANST.routes.product.category,
-      {headers: this.headers, params: params}
+      {params: params}
     );
     return res;
   }
 
   delete(id: string): Observable<Response> {
     return this.http.delete<Response>(
-      CONSTANST.routes.product.delete.replace(':id', id), {headers: this.headers}
+      CONSTANST.routes.product.delete.replace(':id', id)
     );
   }
 
   getOne(id: number): Observable<Product> {
     return this.http.get<Product>(
-      CONSTANST.routes.product.get.replace(':id', String(id)), {headers: this.headers}
-    );
+      CONSTANST.routes.product.get.replace(':id', String(id)));
   }
 
   save(product: Product): Observable<Response> {
     return this.http.post<Response>(
       CONSTANST.routes.product.save,
-      product,
-      {headers: this.headers}
+      product
     );
   }
 
   update(product: Product): Observable<Response> {
     return this.http.put<Response>(
       CONSTANST.routes.product.get.replace(':id', String(product.productId)),
-      product,
-      {headers: this.headers}
-    );
+      product);
   }
 }

@@ -67,11 +67,11 @@
     <div fxFlexOffset="5" fxLayout="column" fxFlex="45" fxLayoutAlign="center top">
       <div class="main-image" fxLayoutAlign="center top">
         <ng-container *ngIf="displayedImage; else noImage ">
-          <img style="max-width: 100%" [src]="displayedImage">
+          <img style="max-width: 500px" style="border-radius: 17px" [src]="displayedImage">
         </ng-container>
         <ng-template #noImage>
           <img width="400px"
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png">
+               src="./assets/img/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg">
 
         </ng-template>
       </div>

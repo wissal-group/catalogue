@@ -25,7 +25,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   public pageSize = 20;
   public dataSource = new MatTableDataSource<any>();
   public page = 1;
-  public isLoading: boolean;
+  public isLoading = true;
   public isTotalReached = false;
   public paginationActivated = true;
   opened = false;

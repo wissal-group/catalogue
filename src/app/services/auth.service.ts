@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,8 @@ export class AuthService {
   }
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    private router: Router,
   ) {
   }
 
@@ -19,9 +21,16 @@ export class AuthService {
     'x-access-token': localStorage.getItem('token')
   });
 
+  isExpired(): boolean {
+    const connectionTime = localStorage.getItem('connection_time');
+    const tokenLife = localStorage.getItem('expires_in');
+    return (Number(connectionTime) + Number(tokenLife) * 1000) - Number(Date.now().toString()) < 0;
+  }
 
   logout() {
     localStorage.removeItem('token');
+    this.loggedIn.next(false);
+    this.router.navigate(['/login']);
   }
 
   hasToken(): boolean {

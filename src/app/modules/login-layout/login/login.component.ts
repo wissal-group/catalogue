@@ -29,15 +29,22 @@ export class LoginComponent implements OnInit {
 
     const url = this.router.url.split('&');
 
+    // getAuthenticationToken
     const temp = url[1];
     if (temp) {
       const token = temp.split('=')[1];
+      const id_token = url[0].split('=')[1];
+      const expires_in = url[2].split('=')[1];
+
       if (token) {
         localStorage.setItem('token', token);
+        localStorage.setItem('id_token', id_token);
+        localStorage.setItem('expires_in', expires_in);
+        localStorage.setItem('connection_time', Date.now().toString());
+
         this.authService.loggedIn.next(true);
       }
     }
-
 
     if (localStorage.getItem('token')) {
       this.authService.loggedIn.next(true);
@@ -47,7 +54,6 @@ export class LoginComponent implements OnInit {
 
 
   public login() {
-    console.log(environment.loginUrl);
     window.location.href = environment.loginUrl;
   }
 
