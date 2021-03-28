@@ -1,4 +1,6 @@
-const HOST = ' https://10xisq4pdi.execute-api.eu-west-3.amazonaws.com';
+import {environment} from '~environments';
+
+const HOST = environment.host;
 
 export const CONSTANST = {
   permissions: {},

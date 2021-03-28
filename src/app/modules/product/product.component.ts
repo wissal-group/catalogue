@@ -162,6 +162,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   }
 
   delete(product: Product): void {
+    console.log(this.dataSource.data);
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '250px',
       data: {
@@ -172,9 +173,8 @@ export class ProductComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.productService.delete(product.productId).subscribe((data: any) => {
-          this.openSnack(data);
-          if (data.success) {
-          }
+          this.openSnack({message: 'Product Deleted Successfully !'});
+          this.dataSource.data = this.dataSource.data.filter(res => res.productId !== product.productId);
         });
       }
     });
