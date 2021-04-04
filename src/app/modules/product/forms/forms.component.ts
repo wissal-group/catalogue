@@ -45,6 +45,7 @@ export class FormsComponent implements OnInit {
         characteristics: [{'': {'': ''}}],
         createDate: '',
         descriptionDetails: '',
+        brand: '',
         VendorCode: '',
         imgURL: '',
         modifyDate: '',
@@ -78,6 +79,7 @@ export class FormsComponent implements OnInit {
       categoryId: new FormControl(data.categoryId, [Validators.required, Validators.minLength(3)]),
       productId: new FormControl(data.productId, [Validators.required, Validators.minLength(3)]),
       descriptionDetails: new FormControl(data.descriptionDetails, [Validators.required]),
+      brand: new FormControl(data.brand, [Validators.required]),
       VendorCode: new FormControl(data.VendorCode),
 
     });

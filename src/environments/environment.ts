@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  host : 'https://m0jlzcd6b8.execute-api.eu-west-3.amazonaws.com',
-  loginUrl: 'service-user-pool-domain-dev-wi-keys.auth.eu-west-3.amazoncognito.com/login?response_type=token&client_id=3ft6b5gd9uc3eooh4aa79999ul&redirect_uri=http://localhost:4200/login',
+  host : 'https://qbf75mxzba.execute-api.eu-west-3.amazonaws.com',
+  loginUrl: 'https://service-user-pool-domain-prod-wi-keys.auth.eu-west-3.amazoncognito.com/login?response_type=token&client_id=4mabv454844p2bubih20si3fjk&redirect_uri=https://wi-keys.com/login',
 };

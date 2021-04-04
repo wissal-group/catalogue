@@ -20,7 +20,7 @@ import {categories} from '~base/config';
   providers: [ProductService]
 })
 export class ProductComponent implements AfterViewInit, OnInit {
-  public displayedColumns = ['id', 'productId', 'categoryId', 'vendorCode', 'createDate', 'image', 'descriptionDetails', 'actions'];
+  public displayedColumns = ['id', 'productId', 'categoryId', 'vendorCode', 'brand', 'createDate', 'image', 'descriptionDetails', 'actions'];
   public pageSizeOptions = [20, 50, 100, 200, 500];
   public pageSize = 20;
   public dataSource = new MatTableDataSource<any>();

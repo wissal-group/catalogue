@@ -77,6 +77,11 @@
           <mat-cell *matCellDef="let row">{{ row.VendorCode }}</mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="brand">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row.brand }}</mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="descriptionDetails">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
           <mat-cell *matCellDef="let row">{{ row.descriptionDetails | slice:0:100  }}...</mat-cell>

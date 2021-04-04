@@ -10,5 +10,6 @@ export interface Product {
   thumbURL: string [];
   timestamp: string;
   title: string;
+  brand: string;
 }
 
