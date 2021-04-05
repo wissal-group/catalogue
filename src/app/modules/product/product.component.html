@@ -31,7 +31,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex style="margin-right: 16px">
-            <input (keyup)="search(label.value)"
+            <input (change)="search(label.value)" (keyup)="search(label.value)"
                    #label
               type="text"
                    placeholder="Rechercher ..."
@@ -41,11 +41,10 @@
               <mat-option *ngFor="let result of searchResults" (click)="getProduct(result._source.productId)">
                 {{result._source.title}}
               </mat-option>
+              <mat-option disabled *ngIf="searchResults.length === 0">
+                Pas de resultat
+              </mat-option>
             </mat-autocomplete>
-<!--            <input matInput placeholder="Rechercher...">-->
-<!--            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" >-->
-<!--              <mat-icon style="font-size: x-large;">search </mat-icon>-->
-<!--            </button>-->
           </mat-form-field>
         </div>
         <div fxFlex="20">

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {CONSTANST} from '~utils/constanst';
 import {Product} from '~app/models/product';
 import {Response} from '~app/models/response';

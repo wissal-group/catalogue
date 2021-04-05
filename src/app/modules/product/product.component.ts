@@ -70,7 +70,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
       distinctUntilChanged(),
       mergeMap(search => this.productService.search(search)))
       .subscribe(res => {
-        console.log(JSON.stringify(res));
         this.searchResults = res['hits'].hits;
       });
   }
@@ -185,12 +184,10 @@ export class ProductComponent implements AfterViewInit, OnInit {
   }
 
   search(label: string) {
-    console.log('Searching :' + label);
     this.searchTextChanged.next(label);
   }
 
   delete(product: Product): void {
-    console.log(this.dataSource.data);
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '250px',
       data: {
