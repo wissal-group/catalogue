@@ -11,6 +11,8 @@ import {ConfirmComponent} from '~components/confirm/confirm.component';
 import {FormsComponent} from '~modules/product/forms/forms.component';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 import {categories} from '~base/config';
+import {debounceTime, distinctUntilChanged, mergeMap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -20,7 +22,16 @@ import {categories} from '~base/config';
   providers: [ProductService]
 })
 export class ProductComponent implements AfterViewInit, OnInit {
-  public displayedColumns = ['id', 'productId', 'categoryId', 'vendorCode', 'brand', 'createDate', 'image', 'descriptionDetails', 'actions'];
+  public displayedColumns = [
+    'id',
+    'productId',
+    'categoryId',
+    'vendorCode',
+    'brand',
+    'createDate',
+    'image',
+    'descriptionDetails',
+    'actions'];
   public pageSizeOptions = [20, 50, 100, 200, 500];
   public pageSize = 20;
   public dataSource = new MatTableDataSource<any>();
@@ -31,6 +42,10 @@ export class ProductComponent implements AfterViewInit, OnInit {
   opened = false;
   private lastElement: Product;
   private previousElements: string[] = [];
+
+  searchTextChanged = new Subject<string>();
+  searchResults = [];
+
 
   public searchByEANCODE: string;
   public categories: { name: string, categories: { value: string, viewValue: string }[] }[] = categories;
@@ -50,6 +65,14 @@ export class ProductComponent implements AfterViewInit, OnInit {
     if (!this.authService.loggedIn.getValue()) {
       this.isLoading = true;
     }
+    this.searchTextChanged.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      mergeMap(search => this.productService.search(search)))
+      .subscribe(res => {
+        console.log(JSON.stringify(res));
+        this.searchResults = res['hits'].hits;
+      });
   }
 
   ngAfterViewInit() {
@@ -159,6 +182,11 @@ export class ProductComponent implements AfterViewInit, OnInit {
       if (result) {
       }
     });
+  }
+
+  search(label: string) {
+    console.log('Searching :' + label);
+    this.searchTextChanged.next(label);
   }
 
   delete(product: Product): void {

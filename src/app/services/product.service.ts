@@ -5,6 +5,7 @@ import {Product} from '~app/models/product';
 import {Response} from '~app/models/response';
 
 import {Observable} from 'rxjs';
+import {environment} from '~environments';
 
 @Injectable()
 export class ProductService {
@@ -46,7 +47,8 @@ export class ProductService {
 
   save(product: Product): Observable<Response> {
     return this.http.post<Response>(
-      CONSTANST.routes.product.save,
+      // CONSTANST.routes.product.save,
+      environment.postProductUrl,
       product
     );
   }
@@ -55,5 +57,10 @@ export class ProductService {
     return this.http.put<Response>(
       CONSTANST.routes.product.get.replace(':id', String(product.productId)),
       product);
+  }
+
+  search(label: string): Observable<Response> {
+    return this.http.get<Response>(
+      CONSTANST.routes.product.search.concat(label));
   }
 }

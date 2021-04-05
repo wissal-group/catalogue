@@ -15,22 +15,8 @@
       <!--      Options DIV-->
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <!--  Options Menu      -->
-        <div>
-          <!--  Get by EAN CODE        -->
-          <mat-form-field class="example-form-field">
-            <mat-label>Entrer le code EAN</mat-label>
-            <input type="number" matInput type="text" [(ngModel)]="searchByEANCODE" #eancode>
-            <button mat-button *ngIf="searchByEANCODE" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="searchByEANCODE=''">
-              <mat-icon>close</mat-icon>
-            </button>
-            <button mat-button *ngIf="searchByEANCODE" (click)="getProduct(eancode.value)" matSuffix mat-icon-button
-                    aria-label="done">
-              <mat-icon>done</mat-icon>
-            </button>
-          </mat-form-field>
+        <div fxFlex="80">
           <!--  SELECT CATEGORY        -->
-
           <mat-form-field>
             <mat-label>Choisir une categorie</mat-label>
             <mat-select #select (valueChange)="getByCategory(select.value)">
@@ -43,8 +29,26 @@
               </mat-optgroup>
             </mat-select>
           </mat-form-field>
+
+          <mat-form-field fxFlex style="margin-right: 16px">
+            <input (keyup)="search(label.value)"
+                   #label
+              type="text"
+                   placeholder="Rechercher ..."
+                   matInput
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let result of searchResults" (click)="getProduct(result._source.productId)">
+                {{result._source.title}}
+              </mat-option>
+            </mat-autocomplete>
+<!--            <input matInput placeholder="Rechercher...">-->
+<!--            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" >-->
+<!--              <mat-icon style="font-size: x-large;">search </mat-icon>-->
+<!--            </button>-->
+          </mat-form-field>
         </div>
-        <div>
+        <div fxFlex="20">
           <!-- Add button -->
           <button (click)="create()"  mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
