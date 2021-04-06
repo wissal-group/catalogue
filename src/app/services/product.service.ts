@@ -5,7 +5,6 @@ import {Product} from '~app/models/product';
 import {Response} from '~app/models/response';
 
 import {Observable} from 'rxjs';
-import {environment} from '~environments';
 
 @Injectable()
 export class ProductService {
@@ -40,15 +39,14 @@ export class ProductService {
     );
   }
 
-  getOne(id: number): Observable<Product> {
+  getOne(id: string): Observable<Product> {
     return this.http.get<Product>(
       CONSTANST.routes.product.get.replace(':id', String(id)));
   }
 
   save(product: Product): Observable<Response> {
     return this.http.post<Response>(
-      // CONSTANST.routes.product.save,
-      environment.postProductUrl,
+      CONSTANST.routes.product.save,
       product
     );
   }

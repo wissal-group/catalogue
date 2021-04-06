@@ -109,7 +109,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
   getProduct(id: string) {
     this.isLoading = true;
-    this.productService.getOne(Number(id)).subscribe(res => {
+    this.productService.getOne(id).subscribe(res => {
         this.isLoading = false;
         this.edit(res);
       },
