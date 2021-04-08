@@ -4,7 +4,7 @@ export interface Product {
   characteristics: [{ string: { key: string, value: string } }];
   createDate: string;
   descriptionDetails: string;
-  VendorCode: string;
+  EanCode: string;
   imgURL: string;
   modifyDate: string;
   thumbURL: string [];

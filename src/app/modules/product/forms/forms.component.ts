@@ -80,7 +80,7 @@ export class FormsComponent implements OnInit {
       productId: new FormControl(data.productId, [Validators.required, Validators.minLength(3)]),
       descriptionDetails: new FormControl(data.descriptionDetails, [Validators.required]),
       brand: new FormControl(data.brand, [Validators.required]),
-      VendorCode: new FormControl(data.VendorCode),
+      EanCode: new FormControl(data.EanCode),
 
     });
   }
