@@ -14,9 +14,9 @@ export const CONSTANST = {
       list: HOST + '/products/size',
       delete: HOST + '/products/:id',
       save: HOST + '/products',
-      update: HOST + 'products/:id',
-      get: HOST + '/products/:id',
-      search: HOST + '/products/search/'
+      update: HOST + '/products',
+      get: HOST + '/product',
+      search: HOST + '/products/search'
     },
     user: {}
   },

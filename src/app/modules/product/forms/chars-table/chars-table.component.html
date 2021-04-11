@@ -2,7 +2,7 @@
   <div fxLayout="row" fxFlex="100">
     <!--  <h1 >Characteristics </h1>-->
     <div fxFlex fxLayoutAlign="end top">
-      <button  mat-raised-button color="primary" (click)="saveCharacteristics()"> Save Characteristics</button>
+      <button  mat-raised-button color="primary" (click)="saveCharacteristics()"> Valider les characteristiques</button>
     </div>
   </div>
   <div fxLayout="column">
@@ -11,7 +11,7 @@
         <!--name-->
         <div fxLayout="row">
           <mat-form-field style=" font-weight: bold">
-            <input matInput placeholder="Group Name" [formControlName]="'charType'">
+            <input matInput placeholder="Nom du groupe" [formControlName]="'charType'">
           </mat-form-field>
 
           <div style="margin-left: 2px; margin-top: 16px">
@@ -56,7 +56,7 @@
 
       </form>
     </ng-container>
-    <button mat-raised-button color="accent" (click)="addGroup()">Add Group</button>
+    <button mat-raised-button color="accent" (click)="addGroup()">Ajouter un groupe de characteristiques</button>
   </div>
 </div>
 

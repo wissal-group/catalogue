@@ -1,10 +1,10 @@
 <div fxLayout="column">
 
   <div mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]>Cancel</button>
+    <button mat-button [mat-dialog-close]>Annuler</button>
     <button mat-raised-button color="primary" (click)='save(frm)' class="btnSave" [disabled]="!frm.valid">
       <mat-icon aria-label="icon-button">save</mat-icon>
-      <span>Save</span>
+      <span>Sauvegarder</span>
     </button>
   </div>
 
@@ -16,18 +16,18 @@
       <div mat-dialog-content>
         <div class="dates">
           <div>
-            <span>Creation Date :</span>
+            <span>Date de creation :</span>
             {{data.data.createDate | date:'d/MM/yyyy'}}
           </div>
 
           <div>
-            <span>Last modification Date :</span>
+            <span>Date de derniere modification :</span>
             {{data.data.modifyDate | date: 'd/MM/yyyy'}}
           </div>
         </div>
         <form [formGroup]="frm">
           <mat-form-field>
-            <input matInput placeholder="Product name" formControlName="title" class="person-input">
+            <input matInput placeholder="Nom de produit" formControlName="title" class="person-input">
             <mat-hint align="end">{{frm.controls.title.value?.length || 0}}/10</mat-hint>
             <mat-error *ngIf="frm.controls.title.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
@@ -35,26 +35,26 @@
           <br/>
 
           <mat-form-field>
-            <input matInput placeholder="Product EAN" formControlName="productId" class="person-input">
+            <input matInput placeholder="Reference Constructeur" formControlName="productId" class="person-input">
             <mat-hint align="end">{{frm.controls.productId.value?.length || 0}}/10</mat-hint>
             <mat-error *ngIf="frm.controls.productId.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="Category" formControlName="categoryId" class="person-input">
+            <input matInput placeholder="Categorie" formControlName="categoryId" class="person-input">
             <mat-hint align="end">{{frm.controls.categoryId.value?.length || 0}}/10</mat-hint>
             <mat-error *ngIf="frm.controls.categoryId.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="Brand" formControlName="brand" class="person-input">
+            <input matInput placeholder="Marque" formControlName="brand" class="person-input">
             <mat-hint align="end">{{frm.controls.brand.value?.length || 0}}/10</mat-hint>
             <mat-error *ngIf="frm.controls.brand.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
 
 
           <mat-form-field>
-            <input matInput placeholder="vendor Code" formControlName="EanCode" class="person-input">
+            <input matInput placeholder="Code EAN" formControlName="EanCode" class="person-input">
             <mat-hint align="end">{{frm.controls.EanCode.value?.length || 0}}/10</mat-hint>
             <mat-error *ngIf="frm.controls.EanCode.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
