@@ -26,6 +26,7 @@ import {UserModule} from '~modules/user/user.module';
 import {AdminLayoutModule} from '~modules/admin-layout/admin-layout.module';
 import {LoginLayoutModule} from '~modules/login-layout/login-layout.module';
 import {httpInterceptorProviders} from '~utils/interceptors';
+import {ImageService} from '~services/image.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {httpInterceptorProviders} from '~utils/interceptors';
     AuthService,
     UserService,
     ProductService,
+    ImageService,
     httpInterceptorProviders,
   ],
   entryComponents: [

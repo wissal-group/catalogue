@@ -11,11 +11,11 @@ export class Interceptor implements HttpInterceptor {
 
   headers = new HttpHeaders({
     'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
-    'Access-Control-Allow-Credentials': 'true',
+    // 'Access-Control-Allow-Methods': ': GET, POST, OPTIONS, PUT, DELETE',
+    // 'Access-Control-Allow-Credentials': 'true',
   });
 
   constructor(private authService: AuthService) {

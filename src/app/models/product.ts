@@ -5,7 +5,7 @@ export interface Product {
   createDate: string;
   descriptionDetails: string;
   EanCode: string;
-  imgURL: string;
+  imgURL: string [];
   modifyDate: string;
   thumbURL: string [];
   timestamp: string;

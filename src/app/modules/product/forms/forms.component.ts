@@ -6,6 +6,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '~services/product.service';
 import {SnackbarComponent} from '~components/snackbar/snackbar.component';
 import {Product} from '~models/product';
+import {ImageService} from '~services/image.service';
 
 @Component({
   selector: 'app-forms',
@@ -18,6 +19,8 @@ export class FormsComponent implements OnInit {
   public mode: string;
 
   public product: Product;
+  public uploadedImages: string[] = [];
+  public uploadedThumbs: string[] = [];
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -29,7 +32,8 @@ export class FormsComponent implements OnInit {
     public data: any,
     private fb: FormBuilder,
     private productService: ProductService,
-    public snack: MatSnackBar
+    public snack: MatSnackBar,
+    private imageService: ImageService,
   ) {
   }
 
@@ -95,17 +99,24 @@ export class FormsComponent implements OnInit {
 
     if (this.mode === 'create') {
       this.product.createDate = Date.now().toString();
+      this.product.imgURL = this.uploadedImages;
+      this.product.thumbURL = this.uploadedThumbs;
+      this.uploadedThumbs = [];
+      this.uploadedImages = [];
       this.productService.save(this.product).subscribe((data: any) => {
         this.openSnack({message: 'Product Added Successfully !'});
-
         if (data.success) {
           this.dialogRef.close(true);
         }
       });
     } else {
+      console.log(this.product.imgURL);
+      this.product.imgURL = this.product.imgURL.concat(this.uploadedImages);
+      this.product.thumbURL = this.product.thumbURL.concat(this.uploadedThumbs);
+      this.uploadedThumbs = [];
+      this.uploadedImages = [];
       this.productService.update(this.product).subscribe((data: any) => {
         this.openSnack({message: 'Product Updated Successfully !'});
-
         if (data.success) {
           this.dialogRef.close(true);
         }
@@ -122,6 +133,30 @@ export class FormsComponent implements OnInit {
 
   chooseImage() {
     this.fileInput.nativeElement.click();
+  }
+
+  getBase64(event) {
+    const me = this;
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    console.log(file.name);
+    reader.readAsDataURL(file);
+
+    reader.onload = (evenlt: any) => {
+      this.imageService.uploadImage({fileName: file.name, image: reader.result}).subscribe(result => {
+        console.log(result);
+        this.displayedImage = result.imageUrl;
+        // this.data.data.imgURL.push(result.imageUrl);
+        // this.data.data.thumbURL.push(result.thumbUrl);
+        this.uploadedImages.push(result.imageUrl);
+        this.uploadedThumbs.push(result.thumbUrl);
+
+      }, error => console.log(error));
+
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
   }
 
 
