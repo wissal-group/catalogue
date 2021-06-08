@@ -14,6 +14,9 @@ import {categories} from '~base/config';
 import {debounceTime, distinctUntilChanged, mergeMap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
+import * as XLSX from 'xlsx';
+import {ImageService} from '~services/image.service';
+
 
 @Component({
   selector: 'app-product',
@@ -22,6 +25,17 @@ import {Subject} from 'rxjs';
   providers: [ProductService]
 })
 export class ProductComponent implements AfterViewInit, OnInit {
+  // XLSX
+  title = 'XlsRead';
+  file: File;
+  arrayBuffer: any;
+  filelist: any;
+  progress = 0;
+  uploadProgress = 0;
+  productsNumber = 1;
+  loadingProducts = false;
+
+
   public displayedColumns = [
     'id',
     'productId',
@@ -55,6 +69,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   constructor(
     private productService: ProductService,
     private authService: AuthService,
+    private imageService: ImageService,
     // private router: Router,
     public dialog: MatDialog,
     public snack: MatSnackBar
@@ -204,5 +219,173 @@ export class ProductComponent implements AfterViewInit, OnInit {
       }
     });
   }
+
+  // XLSX
+  addfile(event) {
+    this.loadingProducts = true;
+    this.file = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsArrayBuffer(this.file);
+    fileReader.onload = async (e) => {
+      this.arrayBuffer = fileReader.result;
+      const data = new Uint8Array(this.arrayBuffer);
+      const arr = new Array();
+      for (let i = 0; i !== data.length; ++i) {
+        arr[i] = String.fromCharCode(data[i]);
+      }
+      const bstr = arr.join('');
+      const workbook = XLSX.read(bstr, {type: 'binary'});
+      const first_sheet_name = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[first_sheet_name];
+      const arraylist = XLSX.utils.sheet_to_json(worksheet, {raw: true});
+
+      this.productsNumber = arraylist.length;
+      console.log('uploading images ...');
+      const updatedArrayList = await this.getStuff(arraylist);
+      updatedArrayList.forEach(elem => {
+        if (elem['characteristics'] != null) {
+          elem['characteristics'] = JSON.parse(elem['characteristics']);
+        }
+      });
+      console.log('savint products ...');
+      updatedArrayList.forEach(element => {
+        let i = 0;
+        this.productService.save(element).subscribe(res => {
+          i++;
+          this.uploadProgress ++;
+          console.log('upload progress' + this.uploadProgress);
+          console.log('saved ' + element.productId);
+        }, error => {
+          i++;
+          this.uploadProgress ++;
+          console.log('upload progress' + this.uploadProgress);
+          console.log('failed to save ' + element.productId + ' reason : ' + error.error);
+        });
+      });
+      const saved = XLSX.utils.json_to_sheet(updatedArrayList);
+      const newbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(newbook, saved);
+      XLSX.writeFile(newbook, 'uploaded' + Date.now() + '.xlsx');
+    };
+  }
+
+
+  async uploadUrls(urls: string[], productName: string) {
+    let images = [];
+    let thumbs = [];
+    let i = 1;
+    for (const url of urls) {
+      if (url.length > 10) {
+        const data = await this.imageService.fetchAndUploadImage(url, productName + i).toPromise();
+        console.log(data);
+        images.push(data['imageUrl']);
+        thumbs.push(data['thumbUrl']);
+        i++;
+      }
+    }
+    return {images, thumbs};
+  }
+
+  async getStuff(arraylist) {
+    let updatedArrayList = [];
+    for (const product of arraylist) {
+      if (product['imgURL']) {
+        const imageUrl: string[] = JSON.parse(product['imgURL']);
+        if (imageUrl !== []) {
+          const uploadedStuff = await this.uploadUrls(imageUrl, product['productId']);
+          product.imageURL = uploadedStuff.images;
+          product.thumbURL = uploadedStuff.thumbs;
+        }
+      }
+      updatedArrayList.push(product);
+      this.progress = updatedArrayList.length / this.productsNumber;
+      console.log('progress: ' + this.progress * 100);
+    }
+    return updatedArrayList;
+  }
+
+  test(){
+    const test = {
+      "brand": "SonicWall",
+      "categoryId": "Hardware>Netwerk>Netwerken>Firewalls",
+      "characteristics": `[
+      {
+        "Caractéristiques physiques": {
+          "Indicateurs LED": "Oui"
+        },
+        "Certificat": {
+          "La certification": "FCC, ICES, CE, LVD, RoHS, C-Tick, VCCI, UL, cUL, TUV/GS, CB, CoC, WEEE, REACH, BSMI"
+        },
+        "Connexions": {
+          "Ports ethernet (Gigabit)": "8",
+          "Ports ethernet (RJ-45)": "9",
+          "Ports USB (2.0)": "2"
+        },
+        "LAN virtuel": {
+          "Nombre de VLAN": "50"
+        },
+        "Poids et dimensions": {
+          "Dimensions (LxPxH)": "225 x 150 x 35 mm",
+          "Poids": "915 g"
+        },
+        "Protocoles": {
+          "Back Light Compensation (BLC)": "PPPoE, L2TP, PPT, VoIP, TCP/IP, UDP, ICMP, HTTP, HTTPS, IPSec, ISAKMP/IKE, SNMP, RADIUS",
+          "Front panel audio connector": "SNMP v2/v3",
+          "Protocoles de routage": "BGP,OSPF,RIP-1,RIP-2",
+          "Serveur DHCP": "Oui"
+        },
+        "Puissance": {
+          "Consommation d'énergie": "13,47 W",
+          "Courant d'entrée": "1 A",
+          "Fréquence d'entrée": "50 - 60 Hz",
+          "Source de courant": "36 W",
+          "Tension d'entrée": "100-240 V"
+        },
+        "représentation / réalisation": {
+          "Fréquence du processeur": "1000 MHz",
+          "Mémoire flash": "64 Mo",
+          "Mémoire interne": "1024 Mo",
+          "Nombre maximal de connexions au pare-feu": "125000"
+        },
+        "Réseau & communication": {
+          "Connectivité": "Avec fil &sans fil",
+          "Norme réseau": "IEEE 802.11a,IEEE 802.11ac,IEEE 802.11n",
+          "Quantité de tunnels VPN": "20",
+          "Support Quality of Service (QoS)": "Oui",
+          "Taux de transfert maximum": "1000 Mbit/s"
+        },
+        "Sans fil": {
+          "Standards Wi-Fi": "802.11a,Wi-Fi 5 (802.11ac),Wi-Fi 4 (802.11n)",
+          "Wi-Fi": "Oui"
+        },
+        "Sécurité": {
+          "Algorithmes de sécurité": "128-bit AES,192-bit AES,256-bit AES,3DES,AES,DES,MD5,SHA-1"
+        }
+      }
+    ]`,
+      "createDate": "2021-04-08T13:39:59.189856",
+      "descriptionDetails": "SonicWall TZ500. Débit du pare-feu: 1400 Mbit/s, Débit de transfert des données maximum: 1000 Mbit/s, Débit du VPN: 1000 Mbit/s. Fréquence du processeur: 1000 MHz, Certification: FCC, ICES, CE, LVD, RoHS, C-Tick, VCCI, UL, cUL, TUV/GS, CB, CoC, WEEE, REACH, BSMI. Standards wifi: 802.11a,Wi-Fi 5 (802.11ac),Wi-Fi 4 (802.11n), Standards réseau: IEEE 802.11a,IEEE 802.11ac,IEEE 802.11n. Algorithme de sécurité soutenu: 128-bit AES,192-bit AES,256-bit AES,3DES,AES,DES,MD5,SHA-1. Protocoles de gestion: SNMP v2/v3, Protocoles réseau pris en charge: PPPoE, L2TP, PPT, VoIP, TCP/IP, UDP, ICMP, HTTP, HTTPS, IPSec, ISAKMP/IKE, SNMP, RADIUS, Protocole de routage: BGP,OSPF,RIP-1,RIP-2",
+      "EanCode": "758479004479",
+      "imgURL": `[
+      "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg",
+      "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg",
+      ]`,
+      "modifyDate": "2021-04-08T13:39:59.189878",
+      "productId": "01-SSC-0447",
+      "thumbURL": `[
+      "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/thumbs/01-SSC-0447-1.jpg"
+    ]`,
+      "title": "SonicWall TZ500 pare-feux (matériel) 1400 Mbit/s"
+    };
+    const updatedArrayList = [];
+    updatedArrayList.push(test);
+    const saved = XLSX.utils.json_to_sheet(updatedArrayList);
+    const newbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(newbook, saved);
+
+    XLSX.writeFile(newbook, 'test' + Date.now().toString() + '.xlsx');
+  }
+
+
 
 }

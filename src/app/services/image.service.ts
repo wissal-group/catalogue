@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class ImageService {
-  baseUrl = 'https://gocyubtzwf.execute-api.eu-west-3.amazonaws.com/prod/upload-image';
+  baseUrl = 'https://gocyubtzwf.execute-api.eu-west-3.amazonaws.com/prod';
 
   constructor(
     private http: HttpClient,
@@ -14,6 +14,10 @@ export class ImageService {
   }
 
   uploadImage(image: Image): Observable<any> {
-    return this.http.post<any>(this.baseUrl, image);
+    return this.http.post<any>(this.baseUrl + '/upload-image', image);
+  }
+
+  fetchAndUploadImage(url: string, fileName: string) {
+    return this.http.post<any>(this.baseUrl + '/fetchupload-image', {'image_url': url, fileName});
   }
 }

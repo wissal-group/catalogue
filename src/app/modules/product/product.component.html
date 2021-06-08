@@ -1,5 +1,13 @@
 <div class="animated fadeIn table-container ">
   <mat-card>
+    <div  fxLayout="row" fxLayoutAlign="space-around center" style="margin-bottom: 10px" >
+      <button  (click)="test()">Télécharger un exemple de ficher d'upload</button>
+      <input type="file" class="form-control" (change)="addfile($event)" placeholder="Selectionner un fichier Excel" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+
+      <span > images upload progress :  {{progress * 100 | number}} %</span>
+      <span >Products upload progress : {{uploadProgress * 100 / productsNumber | number}}%</span>
+    </div>
+
     <mat-card-header>
       <i class="material-icons">local_offer</i>
       <mat-card-title>Produits</mat-card-title>
