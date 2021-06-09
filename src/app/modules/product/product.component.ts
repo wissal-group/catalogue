@@ -368,7 +368,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
       "EanCode": "758479004479",
       "imgURL": `[
       "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg",
-      "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg",
+      "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg"
       ]`,
       "modifyDate": "2021-04-08T13:39:59.189878",
       "productId": "01-SSC-0447",
