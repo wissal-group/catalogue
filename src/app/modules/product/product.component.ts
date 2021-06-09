@@ -100,7 +100,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   private openSnack(data: any): void {
     this.snack.openFromComponent(SnackbarComponent, {
       data: {data: data},
-      duration: 3000
+      duration: 5000
     });
   }
 
@@ -244,7 +244,11 @@ export class ProductComponent implements AfterViewInit, OnInit {
       const updatedArrayList = await this.getStuff(arraylist);
       updatedArrayList.forEach(elem => {
         if (elem['characteristics'] != null) {
-          elem['characteristics'] = JSON.parse(elem['characteristics']);
+          try {
+            elem['characteristics'] = JSON.parse(elem['characteristics']);
+          } catch (e) {
+            this.openSnack({message: 'Erreur de Syntax characteristiques ! Produit :' + elem.productId});
+          }
         }
       });
       console.log('savint products ...');
@@ -252,12 +256,12 @@ export class ProductComponent implements AfterViewInit, OnInit {
         let i = 0;
         this.productService.save(element).subscribe(res => {
           i++;
-          this.uploadProgress ++;
+          this.uploadProgress++;
           console.log('upload progress' + this.uploadProgress);
           console.log('saved ' + element.productId);
         }, error => {
           i++;
-          this.uploadProgress ++;
+          this.uploadProgress++;
           console.log('upload progress' + this.uploadProgress);
           console.log('failed to save ' + element.productId + ' reason : ' + error.error);
         });
@@ -288,9 +292,15 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
   async getStuff(arraylist) {
     let updatedArrayList = [];
+    let imageUrl: [];
     for (const product of arraylist) {
       if (product['imgURL']) {
-        const imageUrl: string[] = JSON.parse(product['imgURL']);
+        try {
+          imageUrl = JSON.parse(product['imgURL']);
+        } catch (e) {
+          this.openSnack({message: 'Erreur Champ images invalid ! Produit :' + product.productId});
+
+        }
         if (imageUrl !== []) {
           const uploadedStuff = await this.uploadUrls(imageUrl, product['productId']);
           product.imageURL = uploadedStuff.images;
@@ -304,11 +314,11 @@ export class ProductComponent implements AfterViewInit, OnInit {
     return updatedArrayList;
   }
 
-  test(){
+  test() {
     const test = {
-      "brand": "SonicWall",
-      "categoryId": "Hardware>Netwerk>Netwerken>Firewalls",
-      "characteristics": `[
+      'brand': 'SonicWall',
+      'categoryId': 'Hardware>Netwerk>Netwerken>Firewalls',
+      'characteristics': `[
       {
         "Caractéristiques physiques": {
           "Indicateurs LED": "Oui"
@@ -363,19 +373,19 @@ export class ProductComponent implements AfterViewInit, OnInit {
         }
       }
     ]`,
-      "createDate": "2021-04-08T13:39:59.189856",
-      "descriptionDetails": "SonicWall TZ500. Débit du pare-feu: 1400 Mbit/s, Débit de transfert des données maximum: 1000 Mbit/s, Débit du VPN: 1000 Mbit/s. Fréquence du processeur: 1000 MHz, Certification: FCC, ICES, CE, LVD, RoHS, C-Tick, VCCI, UL, cUL, TUV/GS, CB, CoC, WEEE, REACH, BSMI. Standards wifi: 802.11a,Wi-Fi 5 (802.11ac),Wi-Fi 4 (802.11n), Standards réseau: IEEE 802.11a,IEEE 802.11ac,IEEE 802.11n. Algorithme de sécurité soutenu: 128-bit AES,192-bit AES,256-bit AES,3DES,AES,DES,MD5,SHA-1. Protocoles de gestion: SNMP v2/v3, Protocoles réseau pris en charge: PPPoE, L2TP, PPT, VoIP, TCP/IP, UDP, ICMP, HTTP, HTTPS, IPSec, ISAKMP/IKE, SNMP, RADIUS, Protocole de routage: BGP,OSPF,RIP-1,RIP-2",
-      "EanCode": "758479004479",
-      "imgURL": `[
+      'createDate': '2021-04-08T13:39:59.189856',
+      'descriptionDetails': 'SonicWall TZ500. Débit du pare-feu: 1400 Mbit/s, Débit de transfert des données maximum: 1000 Mbit/s, Débit du VPN: 1000 Mbit/s. Fréquence du processeur: 1000 MHz, Certification: FCC, ICES, CE, LVD, RoHS, C-Tick, VCCI, UL, cUL, TUV/GS, CB, CoC, WEEE, REACH, BSMI. Standards wifi: 802.11a,Wi-Fi 5 (802.11ac),Wi-Fi 4 (802.11n), Standards réseau: IEEE 802.11a,IEEE 802.11ac,IEEE 802.11n. Algorithme de sécurité soutenu: 128-bit AES,192-bit AES,256-bit AES,3DES,AES,DES,MD5,SHA-1. Protocoles de gestion: SNMP v2/v3, Protocoles réseau pris en charge: PPPoE, L2TP, PPT, VoIP, TCP/IP, UDP, ICMP, HTTP, HTTPS, IPSec, ISAKMP/IKE, SNMP, RADIUS, Protocole de routage: BGP,OSPF,RIP-1,RIP-2',
+      'EanCode': '758479004479',
+      'imgURL': `[
       "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg",
       "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/images/01-SSC-0447-1.jpg"
       ]`,
-      "modifyDate": "2021-04-08T13:39:59.189878",
-      "productId": "01-SSC-0447",
-      "thumbURL": `[
+      'modifyDate': '2021-04-08T13:39:59.189878',
+      'productId': '01-SSC-0447',
+      'thumbURL': `[
       "https://catalogue-products-images.s3.eu-west-3.amazonaws.com/thumbs/01-SSC-0447-1.jpg"
     ]`,
-      "title": "SonicWall TZ500 pare-feux (matériel) 1400 Mbit/s"
+      'title': 'SonicWall TZ500 pare-feux (matériel) 1400 Mbit/s'
     };
     const updatedArrayList = [];
     updatedArrayList.push(test);
@@ -385,7 +395,6 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
     XLSX.writeFile(newbook, 'test' + Date.now().toString() + '.xlsx');
   }
-
 
 
 }
